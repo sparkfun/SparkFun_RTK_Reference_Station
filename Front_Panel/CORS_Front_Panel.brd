@@ -2540,22 +2540,23 @@
 <rectangle x1="-22.02505" y1="28.21165" x2="-17.97375" y2="28.22435" layer="21"/>
 <rectangle x1="-21.99965" y1="28.22435" x2="-17.99915" y2="28.23705" layer="21"/>
 <rectangle x1="-21.94885" y1="28.23705" x2="-18.04995" y2="28.24975" layer="21"/>
-<wire x1="-78.3" y1="21.5" x2="-78.3" y2="3.5" width="0.5" layer="21"/>
-<wire x1="-67.8" y1="-7" x2="67.8" y2="-7" width="0.5" layer="21"/>
-<wire x1="78.3" y1="3.5" x2="78.3" y2="21.5" width="0.5" layer="21"/>
-<wire x1="67.8" y1="32" x2="-67.8" y2="32" width="0.5" layer="21"/>
-<wire x1="70.55" y1="-4.25" x2="75.55" y2="0.75" width="0.5" layer="21" curve="-90"/>
-<wire x1="70.55" y1="-4.25" x2="67.8" y2="-7" width="0.5" layer="21" curve="-90"/>
-<wire x1="78.3" y1="3.5" x2="75.55" y2="0.75" width="0.5" layer="21" curve="-90"/>
-<wire x1="75.55" y1="24.25" x2="70.55" y2="29.25" width="0.5" layer="21" curve="-90"/>
-<wire x1="75.55" y1="24.25" x2="78.3" y2="21.5" width="0.5" layer="21" curve="-90"/>
-<wire x1="67.8" y1="32" x2="70.55" y2="29.25" width="0.5" layer="21" curve="-90"/>
-<wire x1="-70.55" y1="29.25" x2="-75.55" y2="24.25" width="0.5" layer="21" curve="-90"/>
-<wire x1="-70.55" y1="29.25" x2="-67.8" y2="32" width="0.5" layer="21" curve="-90"/>
-<wire x1="-78.3" y1="21.5" x2="-75.55" y2="24.25" width="0.5" layer="21" curve="-90"/>
-<wire x1="-75.55" y1="0.75" x2="-70.55" y2="-4.25" width="0.5" layer="21" curve="-90"/>
-<wire x1="-75.55" y1="0.75" x2="-78.3" y2="3.5" width="0.5" layer="21" curve="-90"/>
-<wire x1="-67.8" y1="-7" x2="-70.55" y2="-4.25" width="0.5" layer="21" curve="-90"/>
+<wire x1="-78.3" y1="21.5" x2="-78.3" y2="3.5" width="0.5" layer="51"/>
+<wire x1="-67.8" y1="-7" x2="67.8" y2="-7" width="0.5" layer="51"/>
+<wire x1="78.3" y1="3.5" x2="78.3" y2="21.5" width="0.5" layer="51"/>
+<wire x1="67.8" y1="32" x2="-67.8" y2="32" width="0.5" layer="51"/>
+<wire x1="70.55" y1="-4.25" x2="75.55" y2="0.75" width="0.5" layer="51" curve="-90"/>
+<wire x1="70.55" y1="-4.25" x2="67.8" y2="-7" width="0.5" layer="51" curve="-90"/>
+<wire x1="78.3" y1="3.5" x2="75.55" y2="0.75" width="0.5" layer="51" curve="-90"/>
+<wire x1="75.55" y1="24.25" x2="70.55" y2="29.25" width="0.5" layer="51" curve="-90"/>
+<wire x1="75.55" y1="24.25" x2="78.3" y2="21.5" width="0.5" layer="51" curve="-90"/>
+<wire x1="67.8" y1="32" x2="70.55" y2="29.25" width="0.5" layer="51" curve="-90"/>
+<wire x1="-70.55" y1="29.25" x2="-75.55" y2="24.25" width="0.5" layer="51" curve="-90"/>
+<wire x1="-70.55" y1="29.25" x2="-67.8" y2="32" width="0.5" layer="51" curve="-90"/>
+<wire x1="-78.3" y1="21.5" x2="-75.55" y2="24.25" width="0.5" layer="51" curve="-90"/>
+<wire x1="-75.55" y1="0.75" x2="-70.55" y2="-4.25" width="0.5" layer="51" curve="-90"/>
+<wire x1="-75.55" y1="0.75" x2="-78.3" y2="3.5" width="0.5" layer="51" curve="-90"/>
+<wire x1="-67.8" y1="-7" x2="-70.55" y2="-4.25" width="0.5" layer="51" curve="-90"/>
+<text x="0" y="-5" size="2" layer="16" font="vector" ratio="15" rot="MR0" align="bottom-center">v01</text>
 </plain>
 <libraries>
 <library name="SparkFun-Aesthetics">
