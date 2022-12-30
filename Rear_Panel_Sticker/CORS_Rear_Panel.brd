@@ -3,7 +3,7 @@
 <eagle version="9.6.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -5335,14 +5335,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="8.13" y1="0" x2="8.13" y2="13.84" width="0.2" layer="51"/>
 <wire x1="8.13" y1="13.84" x2="-8.13" y2="13.84" width="0.2" layer="51"/>
 <wire x1="-8.13" y1="13.84" x2="-8.13" y2="0" width="0.2" layer="51"/>
-<wire x1="-7.13" y1="14.84" x2="7.13" y2="14.84" width="0.2" layer="20"/>
-<wire x1="7.13" y1="14.84" x2="9.13" y2="12.84" width="0.2" layer="20" curve="-90"/>
-<wire x1="9.13" y1="12.84" x2="9.13" y2="0.5" width="0.2" layer="20"/>
+<wire x1="-8.13" y1="14.84" x2="8.13" y2="14.84" width="0.2" layer="20"/>
+<wire x1="8.13" y1="14.84" x2="9.13" y2="13.84" width="0.2" layer="20" curve="-90"/>
+<wire x1="9.13" y1="13.84" x2="9.13" y2="0.5" width="0.2" layer="20"/>
 <wire x1="9.13" y1="0.5" x2="8.13" y2="-0.5" width="0.2" layer="20" curve="-90"/>
 <wire x1="8.13" y1="-0.5" x2="-8.13" y2="-0.5" width="0.2" layer="20"/>
 <wire x1="-8.13" y1="-0.5" x2="-9.13" y2="0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="-9.13" y1="0.5" x2="-9.13" y2="12.84" width="0.2" layer="20"/>
-<wire x1="-9.13" y1="12.84" x2="-7.13" y2="14.84" width="0.2" layer="20" curve="-90"/>
+<wire x1="-9.13" y1="0.5" x2="-9.13" y2="13.84" width="0.2" layer="20"/>
+<wire x1="-9.13" y1="13.84" x2="-8.13" y2="14.84" width="0.2" layer="20" curve="-90"/>
 <text x="0" y="0" size="1.27" layer="20" align="bottom-center">Route Out</text>
 </package>
 </packages>

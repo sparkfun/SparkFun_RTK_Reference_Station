@@ -14219,15 +14219,31 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="6.7" y1="5" x2="6.7" y2="-5" width="0.2" layer="51"/>
 <wire x1="6.7" y1="-5" x2="-6.7" y2="-5" width="0.2" layer="51"/>
 <wire x1="-6.7" y1="-5" x2="-6.7" y2="5" width="0.2" layer="51"/>
-<wire x1="-7.7" y1="-5" x2="-7.7" y2="5" width="0.2" layer="20"/>
-<wire x1="-7.7" y1="5" x2="-6.7" y2="6" width="0.2" layer="20" curve="-90"/>
-<wire x1="-6.7" y1="6" x2="6.7" y2="6" width="0.2" layer="20"/>
-<wire x1="6.7" y1="6" x2="7.7" y2="5" width="0.2" layer="20" curve="-90"/>
-<wire x1="7.7" y1="5" x2="7.7" y2="-5" width="0.2" layer="20"/>
-<wire x1="7.7" y1="-5" x2="6.7" y2="-6" width="0.2" layer="20" curve="-90"/>
-<wire x1="6.7" y1="-6" x2="-6.7" y2="-6" width="0.2" layer="20"/>
-<wire x1="-6.7" y1="-6" x2="-7.7" y2="-5" width="0.2" layer="20" curve="-90"/>
+<wire x1="-7.7" y1="-5" x2="-7.7" y2="5" width="0.2" layer="51"/>
+<wire x1="-7.7" y1="5" x2="-6.7" y2="6" width="0.2" layer="51" curve="-90"/>
+<wire x1="-6.7" y1="6" x2="6.7" y2="6" width="0.2" layer="51"/>
+<wire x1="6.7" y1="6" x2="7.7" y2="5" width="0.2" layer="51" curve="-90"/>
+<wire x1="7.7" y1="5" x2="7.7" y2="-5" width="0.2" layer="51"/>
+<wire x1="7.7" y1="-5" x2="6.7" y2="-6" width="0.2" layer="51" curve="-90"/>
+<wire x1="6.7" y1="-6" x2="-6.7" y2="-6" width="0.2" layer="51"/>
+<wire x1="-6.7" y1="-6" x2="-7.7" y2="-5" width="0.2" layer="51" curve="-90"/>
 <text x="0" y="0" size="1.27" layer="20" align="center">Route Out</text>
+<wire x1="-9.55" y1="7.5" x2="9.55" y2="7.5" width="0.2" layer="20"/>
+<wire x1="-9.55" y1="7.5" x2="-9.55" y2="4.5" width="0.2" layer="20" curve="180"/>
+<wire x1="9.55" y1="4.5" x2="9.55" y2="7.5" width="0.2" layer="20" curve="180"/>
+<wire x1="-9.55" y1="-8.3" x2="-9.55" y2="-11.3" width="0.2" layer="20" curve="180"/>
+<wire x1="9.55" y1="-11.3" x2="9.55" y2="-8.3" width="0.2" layer="20" curve="180"/>
+<text x="-6" y="4" size="0.5" layer="51">13.42 x 10.06 A/A</text>
+<text x="-6" y="6.3" size="0.5" layer="51">15.42 x 12.06 V/A</text>
+<wire x1="-9.55" y1="4.5" x2="-9.55" y2="-8.3" width="0.2" layer="20"/>
+<wire x1="9.55" y1="4.5" x2="9.55" y2="-8.3" width="0.2" layer="20"/>
+<wire x1="-9.55" y1="-11.3" x2="-7" y2="-11.3" width="0.2" layer="20"/>
+<wire x1="7" y1="-11.3" x2="9.55" y2="-11.3" width="0.2" layer="20"/>
+<wire x1="-7" y1="-11.3" x2="-7" y2="-13.8" width="0.2" layer="20"/>
+<wire x1="7" y1="-11.3" x2="7" y2="-13.8" width="0.2" layer="20"/>
+<wire x1="-7" y1="-13.8" x2="-5.5" y2="-15.3" width="0.2" layer="20" curve="90"/>
+<wire x1="5.5" y1="-15.3" x2="7" y2="-13.8" width="0.2" layer="20" curve="90"/>
+<wire x1="-5.5" y1="-15.3" x2="5.5" y2="-15.3" width="0.2" layer="20"/>
 </package>
 </packages>
 <symbols>
@@ -14457,6 +14473,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="117,1,222.5,60.04,GND,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>

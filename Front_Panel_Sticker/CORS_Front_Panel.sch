@@ -14191,21 +14191,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-4.5" y1="1" x2="-4.5" y2="2.2" width="0.2" layer="51"/>
 <wire x1="-4.5" y1="2.2" x2="-3.5" y2="3.2" width="0.2" layer="51" curve="-90"/>
 </package>
-<package name="OLED">
-<wire x1="-6.7" y1="5" x2="6.7" y2="5" width="0.2" layer="51"/>
-<wire x1="6.7" y1="5" x2="6.7" y2="-5" width="0.2" layer="51"/>
-<wire x1="6.7" y1="-5" x2="-6.7" y2="-5" width="0.2" layer="51"/>
-<wire x1="-6.7" y1="-5" x2="-6.7" y2="5" width="0.2" layer="51"/>
-<wire x1="-7.7" y1="-5" x2="-7.7" y2="5" width="0.2" layer="20"/>
-<wire x1="-7.7" y1="5" x2="-6.7" y2="6" width="0.2" layer="20" curve="-90"/>
-<wire x1="-6.7" y1="6" x2="6.7" y2="6" width="0.2" layer="20"/>
-<wire x1="6.7" y1="6" x2="7.7" y2="5" width="0.2" layer="20" curve="-90"/>
-<wire x1="7.7" y1="5" x2="7.7" y2="-5" width="0.2" layer="20"/>
-<wire x1="7.7" y1="-5" x2="6.7" y2="-6" width="0.2" layer="20" curve="-90"/>
-<wire x1="6.7" y1="-6" x2="-6.7" y2="-6" width="0.2" layer="20"/>
-<wire x1="-6.7" y1="-6" x2="-7.7" y2="-5" width="0.2" layer="20" curve="-90"/>
-<text x="0" y="0" size="1.27" layer="20" align="center">Route Out</text>
-</package>
 </packages>
 <symbols>
 <symbol name="LED">
@@ -14233,16 +14218,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-3.5" y1="-0.5" x2="-5" y2="1" width="0.2" layer="94" curve="-90"/>
 <wire x1="-5" y1="1" x2="-5" y2="2.2" width="0.2" layer="94"/>
 <wire x1="-5" y1="2.2" x2="-3.5" y2="3.7" width="0.2" layer="94" curve="-90"/>
-</symbol>
-<symbol name="OLED">
-<wire x1="-6.5" y1="7" x2="6.5" y2="7" width="0.2" layer="94"/>
-<wire x1="6.5" y1="7" x2="8.5" y2="5" width="0.2" layer="94" curve="-90"/>
-<wire x1="8.5" y1="5" x2="8.5" y2="-5" width="0.2" layer="94"/>
-<wire x1="8.5" y1="-5" x2="6.5" y2="-7" width="0.2" layer="94" curve="-90"/>
-<wire x1="6.5" y1="-7" x2="-6.5" y2="-7" width="0.2" layer="94"/>
-<wire x1="-6.5" y1="-7" x2="-8.5" y2="-5" width="0.2" layer="94" curve="-90"/>
-<wire x1="-8.5" y1="-5" x2="-8.5" y2="5" width="0.2" layer="94"/>
-<wire x1="-8.5" y1="5" x2="-6.5" y2="7" width="0.2" layer="94" curve="-90"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -14288,18 +14263,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </gates>
 <devices>
 <device name="" package="USB-C">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="OLED">
-<gates>
-<gate name="G$1" symbol="OLED" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="OLED">
 <technologies>
 <technology name=""/>
 </technologies>
@@ -14367,7 +14330,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="MICRO_SD" library="CORS_Panels" deviceset="MICRO_SD" device=""/>
 <part name="ESP32_USB" library="CORS_Panels" deviceset="USB-C" device=""/>
 <part name="GNSS_USB" library="CORS_Panels" deviceset="USB-C" device=""/>
-<part name="OLED" library="CORS_Panels" deviceset="OLED" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="SFE_LOGO_NAME_FLAME" device=".3_INCH" value="SFE_LOGO_NAME_FLAME.3_INCH"/>
 </parts>
 <sheets>
@@ -14394,7 +14356,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="MICRO_SD" gate="G$1" x="92.5" y="95" smashed="yes"/>
 <instance part="ESP32_USB" gate="G$1" x="162.5" y="95" smashed="yes"/>
 <instance part="GNSS_USB" gate="G$1" x="182.5" y="95" smashed="yes"/>
-<instance part="OLED" gate="G$1" x="125" y="105" smashed="yes"/>
 <instance part="LOGO1" gate="G$1" x="85" y="2.5" smashed="yes"/>
 </instances>
 <busses>
