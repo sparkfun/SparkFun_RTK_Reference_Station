@@ -36001,7 +36001,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY15" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="SUPPLY32" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="GND57" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="J7" library="SparkFun-RF" deviceset="ANTENNA-SMA-GROUNDED" device="EDGE_SMA"/>
+<part name="J7" library="SparkFun-RF" deviceset="ANTENNA-SMA-GROUNDED" device="EDGE_RPSMA" value="ANTENNA-SMA-GROUNDEDEDGE_RPSMA"/>
 <part name="J8" library="SparkFun-Connectors" deviceset="U.FL2PIN" device="-REDUCED-FOOTPRINT"/>
 <part name="GND59" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND46" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
