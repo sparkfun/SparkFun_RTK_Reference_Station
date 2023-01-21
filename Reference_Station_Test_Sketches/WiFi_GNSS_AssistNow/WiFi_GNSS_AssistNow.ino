@@ -42,7 +42,9 @@
   A35 : Board Detect (1.1V)
 */
 
-//#define USE_MGA_ACKs // Uncomment this line to use the UBX_MGA_ACK_DATA0 acknowledgements
+#define USE_MGA_ACKs // Uncomment this line to use the UBX_MGA_ACK_DATA0 acknowledgements
+
+#define USE_SERVER_ASSISTANCE // Uncomment this line to include the position in the AssistNow data request
 
 #include <SPI.h> // Needed for SPI to GNSS
 #include <HTTPClient.h>
@@ -50,6 +52,9 @@
 
 #include <SparkFun_u-blox_GNSS_v3.h> //http://librarymanager/All#SparkFun_u-blox_GNSS_v3
 SFE_UBLOX_GNSS_SUPER theGNSS;
+
+#include "time.h"
+const char* ntpServer = "pool.ntp.org"; // The Network Time Protocol Server
 
 const int GNSS_CS = 5; // Chip select for the GNSS SPI interface
 const int ETHERNET_CS = 27; // Chip select for the WizNet 5500
@@ -61,8 +66,24 @@ const char assistNowServer[] = "https://online-live1.services.u-blox.com";
 const char getQuery[] = "GetOnlineData.ashx?";
 const char tokenPrefix[] = "token=";
 const char tokenSuffix[] = ";";
-const char getGNSS[] = "gnss=gps,glo;"; // GNSS can be: gps,qzss,glo,bds,gal
+const char getGNSS[] = "gnss=gps,glo,bds,gal;"; // GNSS can be: gps,qzss,glo,bds,gal
 const char getDataType[] = "datatype=eph,alm,aux;"; // Data type can be: eph,alm,aux,pos
+
+#ifdef USE_SERVER_ASSISTANCE
+// Use 55 degrees (*10^7) north, 1 degree (*10^7) west, 100m (10000cm) altitude, 100km (10000000cm) accuracy. Replace these with your position.
+// The units for lat and lon are degrees * 1e-7 (WGS84)
+// The units for alt (WGS84) and posAcc (stddev) are cm.
+
+const char useLatitude[] = "lat=55.0;"; // Use an approximate latitude of 55 degrees north. Replace this with your latitude.
+const char useLongitude[] = "lon=-1.0;"; // Use an approximate longitude of 1 degree west. Replace this with your longitude.
+const char useAlt[] = "alt=100;"; // Use an approximate latitude of 100m above WGS84. Replace this with your altitude.
+const char usePosAcc[] = "pacc=100000;"; // Use a position accuracy of 100000m (100km)
+
+const int32_t myLat = 550000000; // Replace this with your latitude.
+const int32_t myLon = -10000000; // Replace this with your longitude.
+const int32_t myAlt = 10000; // Replace this with your altitude.
+const uint32_t posAcc = 10000000;
+#endif
 
 void setup()
 {
@@ -85,7 +106,8 @@ void setup()
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Connect to the GNSS.
 
-  //theGNSS.enableDebugging(Serial); // Uncomment this line to enable debug messages on Serial
+  // Uncomment the next line to enable the 'major' debug messages on Serial so you can see what AssistNow data is being sent
+  //theGNSS.enableDebugging(Serial, true);
 
   while (!theGNSS.begin(SPI, GNSS_CS)) // Start the GNSS on SPI. Default to 4MHz
   {
@@ -130,6 +152,22 @@ void setup()
   Serial.println(F("WiFi connected!"));
 
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // Set the RTC using network time. (Code taken from the SimpleTime example.)
+
+  // Request the time from the NTP server and use it to set the ESP32's RTC.
+  configTime(0, 0, ntpServer); // Set the GMT and daylight offsets to zero. We need UTC, not local time.
+
+  struct tm timeinfo;
+  if(!getLocalTime(&timeinfo))
+  {
+    Serial.println("Failed to obtain time");
+  }
+  else
+  {
+    Serial.println(&timeinfo, "Time is: %A, %B %d %Y %H:%M:%S");
+  }
+
+  //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Use HTTP GET to receive the AssistNow_Online data
 
   const int URL_BUFFER_SIZE  = 256;
@@ -139,14 +177,29 @@ void setup()
 
   // Assemble the URL
   // Note the slash after the first %s (assistNowServer)
-  snprintf(theURL, URL_BUFFER_SIZE, "%s/%s%s%s%s%s%s",
-    assistNowServer,
-    getQuery,
-    tokenPrefix,
-    myAssistNowToken,
-    tokenSuffix,
-    getGNSS,
-    getDataType);
+#ifdef USE_SERVER_ASSISTANCE
+    snprintf(theURL, URL_BUFFER_SIZE, "%s/%s%s%s%s%s%s%s%s%s%s",
+      assistNowServer,
+      getQuery,
+      tokenPrefix,
+      myAssistNowToken,
+      tokenSuffix,
+      getGNSS,
+      getDataType,
+      useLatitude,
+      useLongitude,
+      useAlt,
+      usePosAcc);
+#else
+    snprintf(theURL, URL_BUFFER_SIZE, "%s/%s%s%s%s%s%s",
+      assistNowServer,
+      getQuery,
+      tokenPrefix,
+      myAssistNowToken,
+      tokenSuffix,
+      getGNSS,
+      getDataType);
+#endif
 
   Serial.print(F("HTTP URL is: "));
   Serial.println(theURL);
@@ -196,12 +249,39 @@ void setup()
   http.end();  
   
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // Push the RTC time to the module
+
+  // Uncomment the next line to enable the 'major' debug messages on Serial so you can see what AssistNow data is being sent
+  //theGNSS.enableDebugging(Serial, true);
+
+  if(getLocalTime(&timeinfo))
+  {
+    // setUTCTimeAssistance uses a default time accuracy of 2 seconds which should be OK here.
+    // Have a look at the library source code for more details.
+    theGNSS.setUTCTimeAssistance(timeinfo.tm_year + 1900, timeinfo.tm_mon + 1, timeinfo.tm_mday,
+                                timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+  }
+  else
+  {
+    Serial.println("Failed to obtain time. This will not work well. The GNSS needs accurate time to start up quickly.");
+  }
+
+  //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // If desired - push initial position assistance to the module
+
+#ifndef USE_SERVER_ASSISTANCE
+
+  theGNSS.setPositionAssistanceLLH(myLat, myLon, myAlt, posAcc, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
+
+  // We could use setPositionAssistanceXYZ instead if needed.
+
+#endif
+  
+  //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Push the AssistNow data to the module
 
   if (payloadSize > 0)
   {  
-    // Uncomment the next line to enable the 'major' debug messages on Serial so you can see what AssistNow data is being sent
-    //theGNSS.enableDebugging(Serial, true);
 
 #ifndef USE_MGA_ACKs
 
@@ -211,7 +291,8 @@ void setup()
     theGNSS.setAckAiding(0);
 
     // Push all the AssistNow data. Don't use UBX_MGA_ACK_DATA0's. Use the default delay of 7ms between messages.
-    theGNSS.pushAssistNowData(payload, (size_t)payloadSize);
+    // The 'true' parameter tells pushAssistNowData not to push any time data from the payload.
+    theGNSS.pushAssistNowData(true, payload, (size_t)payloadSize);
 
 #else
 
@@ -226,12 +307,21 @@ void setup()
     // But, just for giggles, let's use SFE_UBLOX_MGA_ASSIST_ACK_ENQUIRE just to confirm that the
     // MGA-ACK messages are actually enabled.
     // Wait for up to 100ms for each ACK to arrive! 100ms is a bit excessive... 7ms is nearer the mark.
-    theGNSS.pushAssistNowData(payload, (size_t)payloadSize, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
+    // The 'true' parameter tells pushAssistNowData not to push any time data from the payload.
+    theGNSS.pushAssistNowData(true, payload, (size_t)payloadSize, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
 
 #endif
 
   }
 
+  //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // Disconnect the WiFi as it's no longer needed
+
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
+  Serial.println(F("WiFi disconnected"));
+
+  
   Serial.println(F("Here we go!"));
   Serial.println();
 }
