@@ -115,6 +115,7 @@ void tpISR()
 void ethernetISR()
 {
   gettimeofday((timeval *)&ethernetTv, (timezone *)&tz_utc);
+  //w5500ClearSocketInterrupts(); // Not sure if it is best to clear the interrupt(s) here - or in the loop?
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -451,14 +452,25 @@ void w5500write(SPIClass &spiPort, const int cs, uint16_t address, uint8_t contr
   spiPort.endTransaction();
 }
 
-void w5500ClearInterrupts()
+void w5500ClearSocketInterrupts()
 {
-  // Clear all W5500 interrupts.
+  // Clear all W5500 socket interrupts.
   for (uint8_t i = 0; i < (sizeof(w5500SocketRegisters) / sizeof(uint8_t)); i++)
   {
-    w5500write(SPI, GNSS_CS, w5500SnIR, w5500SocketRegisters[i], (uint8_t *)&w5500SnIR_ClearAll, 1);
+    w5500write(SPI, ETHERNET_CS, w5500SnIR, w5500SocketRegisters[i], (uint8_t *)&w5500SnIR_ClearAll, 1);
   }
-  w5500write(SPI, GNSS_CS, w5500SIR, w5500CommonRegister, (uint8_t *)&w5500SIR_ClearAll, 1);
+  w5500write(SPI, ETHERNET_CS, w5500SIR, w5500CommonRegister, (uint8_t *)&w5500SIR_ClearAll, 1);
+}
+
+void w5500EnableSocketInterrupts()
+{
+  // Enable the RECV interrupt on all eight sockets
+  for (uint8_t i = 0; i < (sizeof(w5500SocketRegisters) / sizeof(uint8_t)); i++)
+  {
+    w5500write(SPI, ETHERNET_CS, w5500SnIMR, w5500SocketRegisters[i], (uint8_t *)&w5500SnIMR_RECV, 1);
+  }
+
+  w5500write(SPI, ETHERNET_CS, w5500SIMR, w5500CommonRegister, (uint8_t *)&w5500SIMR_EnableAll, 1); // Enable the socket interrupt on all eight sockets
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -571,19 +583,13 @@ void setup()
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   // Configure Ethernet interrupts
-  
-  // Enable the RECV interrupt on all eight sockets
-  for (uint8_t i = 0; i < (sizeof(w5500SocketRegisters) / sizeof(uint8_t)); i++)
-  {
-    w5500write(SPI, GNSS_CS, w5500SnIMR, w5500SocketRegisters[i], (uint8_t *)&w5500SnIMR_RECV, 1);
-  }
 
-  w5500write(SPI, GNSS_CS, w5500SIMR, w5500CommonRegister, (uint8_t *)&w5500SIMR_EnableAll, 1); // Enable the socket interrupt on all eight sockets
- 
+  w5500EnableSocketInterrupts();
+  
   // Attach the W5500 interrupt to the ISR
   attachInterrupt(ETHERNET_INT, ethernetISR, FALLING);
 
-  w5500ClearInterrupts();
+  w5500ClearSocketInterrupts();
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -602,9 +608,10 @@ void loop()
 
   if (processed)
   {
-    w5500ClearInterrupts();
+    w5500ClearSocketInterrupts(); // Not sure if it is best to clear the interrupt(s) here - or in the ISR?
     Serial.print("NTP request processed: ");
     Serial.println(ntpDiag);
+    Serial.println();
   }
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -613,12 +620,12 @@ void loop()
   switch (Ethernet.maintain()) {
     case 1:
       //renewed fail
-      Serial.println("Error: renewed fail");
+      Serial.println("Ethernet.maintain: Error: renewed fail");
       break;
 
     case 2:
       //renewed success
-      Serial.println("Renewed success");
+      Serial.println("Ethernet.maintain: Renewed success");
       //print your local IP address:
       Serial.print("My IP address: ");
       Serial.println(Ethernet.localIP());
@@ -626,12 +633,12 @@ void loop()
 
     case 3:
       //rebind fail
-      Serial.println("Error: rebind fail");
+      Serial.println("Ethernet.maintain: Error: rebind fail");
       break;
 
     case 4:
       //rebind success
-      Serial.println("Rebind success");
+      Serial.println("Ethernet.maintain: Rebind success");
       //print your local IP address:
       Serial.print("My IP address: ");
       Serial.println(Ethernet.localIP());
@@ -701,18 +708,30 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
   
   int packetDataSize = timeServer.parsePacket();
 
+  IPAddress remoteIP = timeServer.remoteIP();
+  uint16_t remotePort = timeServer.remotePort();
+  // Note to self:
+  // I'm testing the server with a Raspberry Pi on the local network.
+  // Initially, I couldn't get the Pi to sync. I was seeing "timed out waiting for reply" errors in the syslog.
+  // It started working when I installed ntp on the Pi (sudo apt-get install ntp) and added the server to
+  // /etc/ntp.conf (server 192.168.0.57) and then restarted the server (sudo service ntp restart).
+  // I noticed that ntp always uses port 123, but, previously timesyncd was using _random_ remotePorts.
+  // Maybe the solution would have been to ignore the remotePort and always reply on 123? Not sure.
+  // Anyway, it works great now I have ntp installed.
+  
   if (ntpDiag != nullptr) // Add the packet size and remote IP/Port to the diagnostics
   {
-    IPAddress remote = timeServer.remoteIP();
     snprintf(ntpDiag, ntpDiagSize, "Packet Size: %d  Remote IP: %d.%d.%d.%d  Remote Port: %d\r\n",
-      packetDataSize, remote[0], remote[1], remote[2], remote[3], timeServer.remotePort());
+      packetDataSize, remoteIP[0], remoteIP[1], remoteIP[2], remoteIP[3], remotePort);
   }
     
   if (packetDataSize && (packetDataSize >= NTPpacket::NTPpacketSize))
   {
     // Read the NTP packet
     NTPpacket packet;
+    
     timeServer.read((char*)&packet.packet, NTPpacket::NTPpacketSize); // Copy the NTP data into our packet
+    
     packet.extract(); // Extract the raw data into fields
     
     packet.LI(0); // Clear the leap second adjustment. TODO: set this correctly using getLeapSecondEvent from the GNSS
@@ -784,14 +803,12 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
     packet.transmitTimestampSeconds = packet.convertUnixSecondsToNTP(txTime.tv_sec); // Unix -> NTP
     packet.transmitTimestampFraction = packet.convertMicrosToFraction(txTime.tv_usec); // Micros to 1/2^32
 
-    // Now transmit the response to the client.
     packet.insert(); // Copy the data fields back into the buffer
-    timeServer.beginPacket(timeServer.remoteIP(), timeServer.remotePort());
-    for (int count = 0; count < NTPpacket::NTPpacketSize; count++)
-    {
-      timeServer.write(packet.packet[count]);
-    }
-    timeServer.endPacket();
+
+    // Now transmit the response to the client.
+    timeServer.beginPacket(remoteIP, remotePort);
+    timeServer.write(packet.packet, NTPpacket::NTPpacketSize);
+    int result = timeServer.endPacket();
     processed = true;
 
     // Add our server transmit time to the diagnostics
@@ -802,7 +819,15 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
         packet.transmitTimestampSeconds, packet.convertFractionToMicros(packet.transmitTimestampFraction));
       strlcat(ntpDiag, tmpbuf, ntpDiagSize);
     }
-  }
+
+      // Add the socketSendUDP result to the diagnostics
+    if (ntpDiag != nullptr)
+    {
+      char tmpbuf[128];
+      snprintf(tmpbuf, sizeof(tmpbuf), "socketSendUDP result:\t%d\r\n", result);
+      strlcat(ntpDiag, tmpbuf, ntpDiagSize);
+    }
+}
   
   return processed;
 }
