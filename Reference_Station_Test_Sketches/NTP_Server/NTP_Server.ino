@@ -32,9 +32,12 @@
 
 #include <SPI.h> // Needed for SPI to GNSS
 
-#include <Ethernet.h>
+#include <Ethernet.h> // http://librarymanager/All#Arduino_Ethernet
+//#include <EthernetLarge.h> // https://github.com/OPEnSLab-OSU/EthernetLarge
 #include <EthernetUdp.h>
 #include "utility/w5100.h"
+
+#include <SSLClient.h> //http://librarymanager/All#SSLClient
 
 #include <Esp.h>
 #include <time.h>
@@ -60,7 +63,58 @@ const int GNSS_INT = 25;
 
 #define NTP_PORT 123
 
-EthernetUDP timeServer;
+class derivedEthernetUDP : public EthernetUDP
+{
+  public:
+    uint8_t getSockIndex() { return sockindex; } // sockindex is protected in EthernetUDP. A derived class can access it.
+};
+derivedEthernetUDP timeServer;
+
+#define fixedIPAddress
+#ifdef fixedIPAddress
+IPAddress myIPAddress = { 192, 168, 0, 123 }; // Use this IP Address - not DHCP
+
+#define useDNS
+#ifdef useDNS
+IPAddress myDNS = { 194, 168, 4, 100 };
+
+#define useGateway
+#ifdef useGateway
+IPAddress myGateway = { 192, 168, 0, 1 };
+
+#define useSubnetMask
+#ifdef useSubnetMask
+IPAddress mySubnetMask = { 255, 255, 255, 0 };
+
+#endif
+
+#endif
+
+#endif
+
+#endif
+
+// TODO: Add gateway and subnet options
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// Assist Now (TCP)
+
+#include "secrets.h" // Update secrets.h with your AssistNow token string
+
+const char assistNowServer[] = "online-live1.services.u-blox.com";
+//const char assistNowServer[] = "https://online-live1.services.u-blox.com";
+//const char assistNowServer[] = "https://online-live2.services.u-blox.com"; // Alternate server
+
+const char getQuery[] = "GetOnlineData.ashx?";
+const char tokenPrefix[] = "token=";
+const char tokenSuffix[] = ";";
+//const char getGNSS[] = "gnss=gps,glo,bds,gal;"; // GNSS can be: gps,qzss,glo,bds,gal
+//const char getDataType[] = "datatype=eph,alm,aux;"; // Data type can be: eph,alm,aux,pos
+const char getGNSS[] = "gnss=gps;"; // GNSS can be: gps,qzss,glo,bds,gal
+const char getDataType[] = "datatype=alm;"; // Data type can be: eph,alm,aux,pos
+
+EthernetClient baseAssistNowClient;
+SSLClient assistNowClient(baseAssistNowClient, TAs, (size_t)TAs_NUM, 35);
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Globals
@@ -76,7 +130,8 @@ volatile unsigned long gnssUTCreceived = 0;     // Record the millis when GNSS t
 const unsigned long resyncAfterMillis = 60000;  // Re-sync every minute - for testing only. Once per hour should be more than adequate
 const unsigned long gnssStaleAfter = 999;       // Treat GNSS time as stale after this many millis
 volatile uint32_t tAcc;                         // Record the GNSS time accuracy
-const uint32_t tAccLimit = 5000;               // Only sync if the time accuracy estimate is better than 15us (5000 nanoseconds)
+const uint32_t tAccLimit = 5000;                // Only sync if the time accuracy estimate is better than 15us (5000 nanoseconds)
+volatile uint8_t sockIndex;                     // The W5500 socket index for the timeServer - so we can enable and read the correct interrupt
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Time Pulse ISR
@@ -105,6 +160,8 @@ void tpISR()
       }
     }
   }
+
+  digitalWrite(STAT_LED, !digitalRead(STAT_LED)); // Flash the LED to indicate TP interrupts are being received
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -115,7 +172,7 @@ void tpISR()
 void ethernetISR()
 {
   gettimeofday((timeval *)&ethernetTv, (timezone *)&tz_utc);
-  //w5500ClearSocketInterrupts(); // Not sure if it is best to clear the interrupt(s) here - or in the loop?
+  w5500ClearSocketInterrupt(sockIndex); // Not sure if it is best to clear the interrupt(s) here - or in the loop?
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -452,6 +509,29 @@ void w5500write(SPIClass &spiPort, const int cs, uint16_t address, uint8_t contr
   spiPort.endTransaction();
 }
 
+void w5500read(SPIClass &spiPort, const int cs, uint16_t address, uint8_t control, uint8_t *data, uint8_t len)
+{
+  // Apply settings
+  spiPort.beginTransaction(SPISettings(8000000, MSBFIRST, SPI_MODE0));
+
+  // Signal communication start
+  digitalWrite(cs, LOW);
+
+  spiPort.transfer(address >> 8); // Address Phase
+  spiPort.transfer(address & 0xFF);
+  
+  spiPort.transfer(control | w5500VDM); // Control Phase
+
+  for (uint8_t i = 0; i < len; i++)
+  {
+    *data++ = spiPort.transfer(0x00); // Data Phase
+  }
+
+  // End communication
+  digitalWrite(cs, HIGH);
+  spiPort.endTransaction();
+}
+
 void w5500ClearSocketInterrupts()
 {
   // Clear all W5500 socket interrupts.
@@ -460,6 +540,14 @@ void w5500ClearSocketInterrupts()
     w5500write(SPI, ETHERNET_CS, w5500SnIR, w5500SocketRegisters[i], (uint8_t *)&w5500SnIR_ClearAll, 1);
   }
   w5500write(SPI, ETHERNET_CS, w5500SIR, w5500CommonRegister, (uint8_t *)&w5500SIR_ClearAll, 1);
+}
+
+void w5500ClearSocketInterrupt(uint8_t sockIndex)
+{
+  // Clear the interrupt for sockIndex only
+  w5500write(SPI, ETHERNET_CS, w5500SnIR, w5500SocketRegisters[sockIndex], (uint8_t *)&w5500SnIR_ClearAll, 1);
+  uint8_t SIR = 1 << sockIndex;
+  w5500write(SPI, ETHERNET_CS, w5500SIR, w5500CommonRegister, &SIR, 1);
 }
 
 void w5500EnableSocketInterrupts()
@@ -471,6 +559,17 @@ void w5500EnableSocketInterrupts()
   }
 
   w5500write(SPI, ETHERNET_CS, w5500SIMR, w5500CommonRegister, (uint8_t *)&w5500SIMR_EnableAll, 1); // Enable the socket interrupt on all eight sockets
+}
+
+void w5500EnableSocketInterrupt(uint8_t sockIndex)
+{
+  w5500write(SPI, ETHERNET_CS, w5500SnIMR, w5500SocketRegisters[sockIndex], (uint8_t *)&w5500SnIMR_RECV, 1); // Enable the RECV interrupt for sockIndex only
+
+  // Read-Modify-Write
+  uint8_t SIMR;
+  w5500read(SPI, ETHERNET_CS, w5500SIMR, w5500CommonRegister, &SIMR, 1);
+  SIMR |= 1 << sockIndex;
+  w5500write(SPI, ETHERNET_CS, w5500SIMR, w5500CommonRegister, &SIMR, 1); // Enable the socket interrupt
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -503,6 +602,18 @@ void setup()
   mac[5] += 3; // ESP32 MAC is base + 0, 1, 2, 3 for WiFi, WiFi AP, BT, Ethernet
 
   // Start the Ethernet connection:
+#ifdef fixedIPAddress
+  Serial.println("Initialize Ethernet with fixed IP Address:");
+#if defined (useSubnetMask)
+  Ethernet.begin(mac, myIPAddress, myDNS, myGateway, mySubnetMask);
+#elif defined (useGateway)
+  Ethernet.begin(mac, myIPAddress, myDNS, myGateway);
+#elif defined (useDNS)
+  Ethernet.begin(mac, myIPAddress, myDNS);
+#else
+  Ethernet.begin(mac, myIPAddress);
+#endif
+#else
   Serial.println("Initialize Ethernet with DHCP:");
   if (Ethernet.begin(mac) == 0)
   {
@@ -520,6 +631,7 @@ void setup()
       delay(1);
     }
   }
+#endif
   // Print your local IP address:
   Serial.print("My IP address: ");
   Serial.println(Ethernet.localIP());
@@ -547,9 +659,9 @@ void setup()
 
   theGNSS.newCfgValset(VAL_LAYER_RAM_BBR); // Create a new Configuration Interface VALSET message
 
-  // While the module is _locking_ to GNSS time, make it generate 1Hz
-  theGNSS.addCfgValset(UBLOX_CFG_TP_FREQ_TP1, 1); // Set the frequency to 1Hz
-  theGNSS.addCfgValset(UBLOX_CFG_TP_DUTY_TP1, 10.0); // Set the pulse ratio / duty to 10%
+  // While the module is _locking_ to GNSS time, stop the TP pulses
+  theGNSS.addCfgValset(UBLOX_CFG_TP_FREQ_TP1, 0); // Set the frequency to 0Hz
+  theGNSS.addCfgValset(UBLOX_CFG_TP_DUTY_TP1, 0.0); // Set the pulse ratio / duty to 0%
 
   // When the module is _locked_ to GNSS time, make it generate 1Hz
   theGNSS.addCfgValset(UBLOX_CFG_TP_FREQ_LOCK_TP1, 1); // Set the frequency to 1Hz
@@ -569,27 +681,118 @@ void setup()
 
   theGNSS.setAutoPVTcallbackPtr(&newPVTdata); // Enable automatic NAV PVT messages with callback to newPVTdata
 
+  // Uncomment the next line to enable the 'major' debug messages on Serial so you can see what AssistNow data is being sent
+  //theGNSS.enableDebugging(Serial, true);
+
+  // Tell the module to return UBX_MGA_ACK_DATA0 messages when we push the AssistNow data
+  theGNSS.setAckAiding(1);
+    
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
   // Attach the TP interrupt to the ISR
   attachInterrupt(GNSS_INT, tpISR, RISING);
+  
+  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  // Connect to the Assist Now server
+
+  const int URL_BUFFER_SIZE  = 256;
+  char theURL[URL_BUFFER_SIZE]; // This will contain the HTTP URL
+
+  // Assemble the URL
+  // Note the slash after the first %s (assistNowServer)
+  snprintf(theURL, URL_BUFFER_SIZE, "GET /%s%s%s%s%s%s HTTP/1.1",
+  //snprintf(theURL, URL_BUFFER_SIZE, "%s%s%s%s%s%s",
+    //assistNowServer,
+    getQuery,
+    tokenPrefix,
+    myAssistNowToken,
+    tokenSuffix,
+    getGNSS,
+    getDataType);
+
+  Serial.print(F("Connecting to: "));
+  Serial.println(assistNowServer);
+  
+  if (assistNowClient.connect(assistNowServer, 443))
+  {
+    Serial.println(F("Connected!"));
+
+    assistNowClient.println(theURL);
+    assistNowClient.print("Host: ");
+    assistNowClient.println(assistNowServer);
+    assistNowClient.println("Connection: close");
+    assistNowClient.println();
+    
+    unsigned long startConnection = millis();
+    bool keepGoing = true;
+
+    while (keepGoing)
+    {
+      int len = assistNowClient.available();
+      
+      if (len > 0)
+      {
+        Serial.print(F("Pushing "));
+        Serial.print(len);
+        Serial.println(F(" bytes to the GNSS"));
+  
+        // Push the AssistNow data.
+        while (len > 0)
+        {
+          byte buffer[80];
+          int packetSize = len;
+          
+          if (packetSize > 80)
+            packetSize = 80;
+            
+          assistNowClient.read(buffer, packetSize);
+  
+          bool printOnce = true;
+          if (printOnce)
+          {
+            Serial.println((char *)buffer);
+            printOnce = false;
+          }
+          
+          // Wait for up to 100ms for each ACK to arrive. 100ms is a bit excessive... 7ms is nearer the mark.
+          theGNSS.pushAssistNowData(buffer, (size_t)packetSize, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
+  
+          len -= packetSize;
+        }
+    
+      }
+
+      if ((millis() > (startConnection + 5000)) // Wait for up to 5 seconds for all data to arrive
+          || ((!assistNowClient.connected()) && (assistNowClient.available() == 0))) // Check we are still connected
+      {
+        assistNowClient.stop();
+        keepGoing = false;
+      }
+    }
+  }
+  else
+  {
+    Serial.println(F("Could not connect to the server!"));
+  }
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   // Start the server
 
-  // NOTE: NTP server must _always_ be initialized first to ensure that it occupies socket 0
-  // and thus allow input capture to work properly for grabbing RX time.
   timeServer.begin(NTP_PORT); // Begin listening
+  sockIndex = timeServer.getSockIndex(); // Get the socket index
+  Serial.print(F("timeServer socket index: "));
+  Serial.println(sockIndex);
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-  // Configure Ethernet interrupts
+  // Configure Ethernet interrupt
 
-  w5500EnableSocketInterrupts();
+  w5500ClearSocketInterrupts(); // Clear all interrupts
+
+  w5500EnableSocketInterrupt(sockIndex); // Enable the RECV interrupt for the desired socket index
   
   // Attach the W5500 interrupt to the ISR
   attachInterrupt(ETHERNET_INT, ethernetISR, FALLING);
 
-  w5500ClearSocketInterrupts();
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -602,13 +805,14 @@ void loop()
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-  // Check for new NTP requests
-  static char ntpDiag[256]; // Char array to hold diagnostic messages
-  bool processed = processOneRequest((const timeval *)&ethernetTv, (const timeval *)&gnssSyncTv, ntpDiag, sizeof(ntpDiag));
+  // Check for new NTP requests - if the time has been sync'd
+  
+  static char ntpDiag[512]; // Char array to hold diagnostic messages
+  bool processed = processOneRequest((lastRTCsync > 0), (const timeval *)&ethernetTv, (const timeval *)&gnssSyncTv, ntpDiag, sizeof(ntpDiag));
 
   if (processed)
   {
-    w5500ClearSocketInterrupts(); // Not sure if it is best to clear the interrupt(s) here - or in the ISR?
+    //w5500ClearSocketInterrupt(sockIndex); // Not sure if it is best to clear the interrupt(s) here - or in the ISR?
     Serial.print("NTP request processed: ");
     Serial.println(ntpDiag);
     Serial.println();
@@ -698,8 +902,8 @@ void loop()
 // recTv contains the timeval the NTP packet was received - from the W5500 interrupt
 // syncTv contains the timeval when the RTC was last sync'd
 // ntpDiag will contain useful diagnostics
-bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpDiag = nullptr, size_t ntpDiagSize = 0); // Header
-bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpDiag, size_t ntpDiagSize)
+bool processOneRequest(bool process, const timeval * recTv, const timeval * syncTv, char *ntpDiag = nullptr, size_t ntpDiagSize = 0); // Header
+bool processOneRequest(bool process, const timeval * recTv, const timeval * syncTv, char *ntpDiag, size_t ntpDiagSize)
 {
   bool processed = false;
 
@@ -731,6 +935,15 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
     NTPpacket packet;
     
     timeServer.read((char*)&packet.packet, NTPpacket::NTPpacketSize); // Copy the NTP data into our packet
+
+    // If process is false, return now
+    if (!process)
+    {
+      char tmpbuf[128];
+      snprintf(tmpbuf, sizeof(tmpbuf), "Packet ignored. Time has not been synchronized.\r\n");
+      strlcat(ntpDiag, tmpbuf, ntpDiagSize);
+      return false;
+    }
     
     packet.extract(); // Extract the raw data into fields
     
@@ -738,10 +951,10 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
     packet.VN(4); // Set the version number to 4
     packet.mode(4); // Set the mode to 4 : Server
     packet.stratum = 1; // Set the stratum to 1 : primary server
-    packet.pollExponent = 6; // Set the poll interval: 6-10 per RFC 5905. 2^6 = 64 seconds
+    packet.pollExponent = 6; // Set the poll interval. 2^6 = 64 seconds
     packet.precision = -20; // Set the precision: 2^-20 = ~1 microsecond precision.
-    packet.rootDelay = 60 * (0xFFFF / 1000); // Set the Root Delay to ~60 milliseconds. Format is Seconds:16.Fraction:16
-    packet.rootDispersion = 10 * (0xFFFF / 1000); // Set the Root Dispersion to ~10 milliseconds. Format is Seconds:16.Fraction:16
+    packet.rootDelay = 0; //(60 * 0xFFFF) / 1000; // Set the Root Delay to ~60 milliseconds. Format is Seconds:16.Fraction:16
+    packet.rootDispersion = (3 * 0xFFFF) / 1000; // Set the Root Dispersion to ~3 milliseconds. Format is Seconds:16.Fraction:16
     packet.referenceId[0] = 'G'; // Set the reference Id to GPS
     packet.referenceId[1] = 'P';
     packet.referenceId[2] = 'S';
@@ -806,6 +1019,9 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
     packet.insert(); // Copy the data fields back into the buffer
 
     // Now transmit the response to the client.
+//    IPAddress RPiAddress = { 129, 168, 0, 50 };
+//    int RPiPort = 123;
+//    timeServer.beginPacket(RPiAddress, RPiPort);
     timeServer.beginPacket(remoteIP, remotePort);
     timeServer.write(packet.packet, NTPpacket::NTPpacketSize);
     int result = timeServer.endPacket();
@@ -820,14 +1036,30 @@ bool processOneRequest(const timeval * recTv, const timeval * syncTv, char *ntpD
       strlcat(ntpDiag, tmpbuf, ntpDiagSize);
     }
 
-      // Add the socketSendUDP result to the diagnostics
+    // Add the socketSendUDP result to the diagnostics
     if (ntpDiag != nullptr)
     {
       char tmpbuf[128];
       snprintf(tmpbuf, sizeof(tmpbuf), "socketSendUDP result:\t%d\r\n", result);
       strlcat(ntpDiag, tmpbuf, ntpDiagSize);
     }
-}
+
+    // Add the packet to the diagnostics
+    if (ntpDiag != nullptr)
+    {
+      char tmpbuf[128];
+      snprintf(tmpbuf, sizeof(tmpbuf), "Packet: ");
+      strlcat(ntpDiag, tmpbuf, ntpDiagSize);
+      for (int i = 0; i < NTPpacket::NTPpacketSize; i++)
+      {
+        snprintf(tmpbuf, sizeof(tmpbuf), "%02X ", packet.packet[i]);
+        strlcat(ntpDiag, tmpbuf, ntpDiagSize);
+      }
+      snprintf(tmpbuf, sizeof(tmpbuf), "\r\n");
+      strlcat(ntpDiag, tmpbuf, ntpDiagSize);
+    }
+    
+  }
   
   return processed;
 }
