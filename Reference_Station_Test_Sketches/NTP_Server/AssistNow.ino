@@ -3,6 +3,22 @@
 
 #include "secrets.h" // Update secrets.h with your AssistNow token string
 
+#ifdef USE_SERVER_ASSISTANCE
+// Use 55 degrees (*10^7) north, 1 degree (*10^7) west, 100m (10000cm) altitude, 100km (10000000cm) accuracy. Replace these with your position.
+// The units for lat and lon are degrees * 1e-7 (WGS84)
+// The units for alt (WGS84) and posAcc (stddev) are cm.
+
+const char useLatitude[] = "lat=54.9;"; // Use an approximate latitude of 55 degrees north. Replace this with your latitude.
+const char useLongitude[] = "lon=-1.4;"; // Use an approximate longitude of 1 degree west. Replace this with your longitude.
+const char useAlt[] = "alt=100;"; // Use an approximate latitude of 100m above WGS84. Replace this with your altitude.
+const char usePosAcc[] = "pacc=25000;filteronpos;"; // Use a position accuracy of 25000m (25km)
+
+const int32_t myLat = 549000000; // Replace this with your latitude (degrees * 1e-7)
+const int32_t myLon = -14000000; // Replace this with your longitude (degrees * 1e-7)
+const int32_t myAlt = 10000; // Replace this with your altitude (cm)
+const uint32_t posAcc = 2500000; // Position accuracy (cm)
+#endif
+
 const uint8_t numAssistNowServers = 2;
 const char assistNowServers[numAssistNowServers][40] = { "online-live1.services.u-blox.com", "online-live2.services.u-blox.com" };
 //const char assistNowServer[] = "https://online-live1.services.u-blox.com";
@@ -49,15 +65,31 @@ bool connectAssistNow(const char *server, const char *dataType, const char *gnss
 
   // Assemble the request
   // Note the slash before the getQuery
-  snprintf(theRequest, REQUEST_BUFFER_SIZE, "GET /%s%s%s%s%s%s%s%s HTTP/1.1",
-    assistNowGetQuery,
-    assistNowTokenPrefix,
-    myAssistNowToken,
-    assistNowTokenSuffix,
-    assistNowGetGNSS,
-    gnss,
-    assistNowGetDataType,
-    dataType);
+  #ifdef USE_SERVER_ASSISTANCE
+    snprintf(theRequest, REQUEST_BUFFER_SIZE, "GET /%s%s%s%s%s%s%s%s%s%s%s%s HTTP/1.1",
+      assistNowGetQuery,
+      assistNowTokenPrefix,
+      myAssistNowToken,
+      assistNowTokenSuffix,
+      assistNowGetGNSS,
+      gnss,
+      assistNowGetDataType,
+      dataType,
+      useLatitude,
+      useLongitude,
+      useAlt,
+      usePosAcc);
+  #else
+    snprintf(theRequest, REQUEST_BUFFER_SIZE, "GET /%s%s%s%s%s%s%s%s HTTP/1.1",
+      assistNowGetQuery,
+      assistNowTokenPrefix,
+      myAssistNowToken,
+      assistNowTokenSuffix,
+      assistNowGetGNSS,
+      gnss,
+      assistNowGetDataType,
+      dataType);
+  #endif
 
   Serial.print(F("Connecting to: "));
   Serial.println(server);
@@ -92,30 +124,36 @@ bool connectAssistNow(const char *server, const char *dataType, const char *gnss
 
     while (keepGoing)
     {
-      int len = assistNowClient.available(); // Check how much data is waiting
-
-      if (len > 0)
+      if (!assistNowClient.connected()) // Check we are still connected
       {
-        if (maxMGAdata > ((bufferPtr - buffer) + len)) // Check there is enough room to hold the data
-        {
-          assistNowClient.read(bufferPtr, len); // Read the data
-          bufferPtr += len;
-
-          Serial.print(F("Adding "));
-          Serial.print(len);
-          Serial.println(F(" bytes to the buffer"));
-        }
-        else
-        {
-          Serial.println(F("Too much data! Discarding..."));
-        }
-      }
-      
-      if ((millis() > (startConnection + 5000)) // Wait for up to 5 seconds for all data to arrive
-          || ((!assistNowClient.connected()) && (assistNowClient.available() == 0))) // Check we are still connected
-      {
-        assistNowClient.stop();
         keepGoing = false;
+      }
+      else
+      {
+        int len = assistNowClient.available(); // Check how much data is waiting
+  
+        if (len > 0)
+        {
+          if (maxMGAdata > ((bufferPtr - buffer) + len)) // Check there is enough room to hold the data
+          {
+            assistNowClient.read(bufferPtr, len); // Read the data
+            bufferPtr += len;
+  
+            Serial.print(F("Adding "));
+            Serial.print(len);
+            Serial.println(F(" bytes to the buffer"));
+          }
+          else
+          {
+            Serial.println(F("Too much data! Discarding..."));
+          }
+        }
+        
+        if (millis() > (startConnection + 5000)) // Wait for up to 5 seconds for all data to arrive
+        {
+          assistNowClient.stop();
+          keepGoing = false;
+        }
       }
     }
 

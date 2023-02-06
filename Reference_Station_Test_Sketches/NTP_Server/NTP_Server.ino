@@ -36,8 +36,8 @@
 
 #include <Ethernet.h> // http://librarymanager/All#Arduino_Ethernet
 //#include <EthernetLarge.h> // https://github.com/OPEnSLab-OSU/EthernetLarge
-#include <EthernetUdp.h>
-#include "utility/w5100.h"
+//#include <EthernetUdp.h>
+//#include "utility/w5100.h"
 
 #include <SSLClient.h> //http://librarymanager/All#SSLClient
 #include "sslCerts.h"
@@ -61,6 +61,10 @@ const int ANALOG_RANDOM = 39;
 
 #include <SparkFun_u-blox_GNSS_v3.h> //http://librarymanager/All#SparkFun_u-blox_GNSS_v3
 SFE_UBLOX_GNSS_SUPER theGNSS;
+
+// Uncomment the following line to include the position in the AssistNow data request
+// This also helps keep the Assist Now data requests under 2KB
+#define USE_SERVER_ASSISTANCE
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // NTP port server (UDP)
@@ -241,6 +245,17 @@ void setup()
       ;
   }
 
+  //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // If desired - push initial position assistance to the module
+
+#ifndef USE_SERVER_ASSISTANCE
+
+  theGNSS.setPositionAssistanceLLH(myLat, myLon, myAlt, posAcc, SFE_UBLOX_MGA_ASSIST_ACK_YES, 100);
+
+  // We could use setPositionAssistanceXYZ instead if needed.
+
+#endif
+
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
   // Attach the TP interrupt to the ISR
   
@@ -297,7 +312,6 @@ void loop()
     //w5500ClearSocketInterrupt(sockIndex); // Not sure if it is best to clear the interrupt(s) here - or in the ISR?
     Serial.print("NTP request processed: ");
     Serial.println(ntpDiag);
-    Serial.println();
   }
 
   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
