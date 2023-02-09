@@ -86,15 +86,15 @@
 <wire x1="79.3" y1="-4.25" x2="75.55" y2="-8" width="0.2" layer="51" curve="-90"/>
 <wire x1="75.55" y1="-8" x2="-75.55" y2="-8" width="0.2" layer="51"/>
 <wire x1="-75.55" y1="-8" x2="-79.3" y2="-4.25" width="0.2" layer="51" curve="-90"/>
-<circle x="-75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="-75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="-75.4" y="29.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="75.4" y="29.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="75.4" y="-4.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="-75.4" y="-4.25" radius="1.5" width="0.2" layer="51"/>
 <wire x1="-79.3" y1="0" x2="79.3" y2="0" width="0.2" layer="51" style="dashdot"/>
-<hole x="-75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="-4.25" drill="3.4"/>
-<hole x="-75.55" y="-4.25" drill="3.4"/>
+<hole x="-75.4" y="29.25" drill="3.4"/>
+<hole x="75.4" y="29.25" drill="3.4"/>
+<hole x="75.4" y="-4.25" drill="3.4"/>
+<hole x="-75.4" y="-4.25" drill="3.4"/>
 </package>
 <package name="LED">
 <hole x="0" y="3" drill="5.5"/>
