@@ -101,7 +101,7 @@
 <circle x="0" y="3" radius="2.5" width="0.2" layer="51"/>
 </package>
 <package name="BUTTON">
-<hole x="0" y="4.05" drill="4"/>
+<hole x="0" y="4.05" drill="3.75"/>
 <circle x="0" y="4.05" radius="1.7" width="0.2" layer="51"/>
 </package>
 <package name="MICRO_SD">
