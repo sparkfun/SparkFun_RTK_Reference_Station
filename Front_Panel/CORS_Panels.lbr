@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -152,22 +152,22 @@
 <wire x1="6.7" y1="-6" x2="-6.7" y2="-6" width="0.2" layer="51"/>
 <wire x1="-6.7" y1="-6" x2="-7.7" y2="-5" width="0.2" layer="51" curve="-90"/>
 <text x="0" y="0" size="1.27" layer="20" align="center">Route Out</text>
-<wire x1="-9.55" y1="7.5" x2="9.55" y2="7.5" width="0.2" layer="20"/>
-<wire x1="-9.55" y1="7.5" x2="-9.55" y2="4.5" width="0.2" layer="20" curve="180"/>
-<wire x1="9.55" y1="4.5" x2="9.55" y2="7.5" width="0.2" layer="20" curve="180"/>
-<wire x1="-9.55" y1="-8.3" x2="-9.55" y2="-11.3" width="0.2" layer="20" curve="180"/>
-<wire x1="9.55" y1="-11.3" x2="9.55" y2="-8.3" width="0.2" layer="20" curve="180"/>
+<wire x1="-9.4" y1="7.35" x2="9.4" y2="7.35" width="0.2" layer="20"/>
+<wire x1="-9.4" y1="7.35" x2="-9.4" y2="4.35" width="0.2" layer="20" curve="180"/>
+<wire x1="9.4" y1="4.35" x2="9.4" y2="7.35" width="0.2" layer="20" curve="180"/>
+<wire x1="-9.4" y1="-8.05" x2="-9.4" y2="-11.05" width="0.2" layer="20" curve="180"/>
+<wire x1="9.4" y1="-11.05" x2="9.4" y2="-8.05" width="0.2" layer="20" curve="180"/>
 <text x="-6" y="4" size="0.5" layer="51">13.42 x 10.06 A/A</text>
 <text x="-6" y="6.3" size="0.5" layer="51">15.42 x 12.06 V/A</text>
-<wire x1="-9.55" y1="4.5" x2="-9.55" y2="-8.3" width="0.2" layer="20"/>
-<wire x1="9.55" y1="4.5" x2="9.55" y2="-8.3" width="0.2" layer="20"/>
-<wire x1="-9.55" y1="-11.3" x2="-7" y2="-11.3" width="0.2" layer="20"/>
-<wire x1="7" y1="-11.3" x2="9.55" y2="-11.3" width="0.2" layer="20"/>
-<wire x1="-7" y1="-11.3" x2="-7" y2="-13.8" width="0.2" layer="20"/>
-<wire x1="7" y1="-11.3" x2="7" y2="-13.8" width="0.2" layer="20"/>
-<wire x1="-7" y1="-13.8" x2="-5.5" y2="-15.3" width="0.2" layer="20" curve="90"/>
-<wire x1="5.5" y1="-15.3" x2="7" y2="-13.8" width="0.2" layer="20" curve="90"/>
-<wire x1="-5.5" y1="-15.3" x2="5.5" y2="-15.3" width="0.2" layer="20"/>
+<wire x1="-9.4" y1="4.35" x2="-9.4" y2="-8.05" width="0.2" layer="20"/>
+<wire x1="9.4" y1="4.35" x2="9.4" y2="-8.05" width="0.2" layer="20"/>
+<wire x1="-9.4" y1="-11.05" x2="-7" y2="-11.05" width="0.2" layer="20"/>
+<wire x1="7" y1="-11.05" x2="9.4" y2="-11.05" width="0.2" layer="20"/>
+<wire x1="-7" y1="-11.05" x2="-7" y2="-12.7" width="0.2" layer="20"/>
+<wire x1="7" y1="-11.05" x2="7" y2="-12.7" width="0.2" layer="20"/>
+<wire x1="-7" y1="-12.7" x2="-5.5" y2="-14.2" width="0.2" layer="20" curve="90"/>
+<wire x1="5.5" y1="-14.2" x2="7" y2="-12.7" width="0.2" layer="20" curve="90"/>
+<wire x1="-5.5" y1="-14.2" x2="5.5" y2="-14.2" width="0.2" layer="20"/>
 </package>
 <package name="SMA">
 <hole x="0" y="0.635" drill="9"/>
