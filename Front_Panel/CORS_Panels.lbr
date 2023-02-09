@@ -170,7 +170,7 @@
 <wire x1="-5.5" y1="-14.2" x2="5.5" y2="-14.2" width="0.2" layer="20"/>
 </package>
 <package name="SMA">
-<hole x="0" y="0.635" drill="9"/>
+<hole x="0" y="0.635" drill="8.75"/>
 <circle x="0" y="0.635" radius="3.965" width="0.2" layer="51"/>
 </package>
 <package name="3.5MM_CONNECTOR">
