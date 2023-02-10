@@ -14150,11 +14150,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <library name="CORS_Panels">
 <packages>
 <package name="LED">
-<hole x="0" y="3" drill="6"/>
-<circle x="0" y="3" radius="2.5" width="0.2" layer="51"/>
+<hole x="0" y="3.1" drill="5.5"/>
+<circle x="0" y="3.1" radius="2.5" width="0.2" layer="51"/>
 </package>
 <package name="BUTTON">
-<hole x="0" y="4.05" drill="4"/>
+<hole x="0" y="4.05" drill="3.75"/>
 <circle x="0" y="4.05" radius="1.7" width="0.2" layer="51"/>
 </package>
 <package name="MICRO_SD">
@@ -14173,14 +14173,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="0" y="0" size="1.27" layer="20" align="bottom-center">Route Out</text>
 </package>
 <package name="USB-C">
-<wire x1="-3.5" y1="3.7" x2="3.5" y2="3.7" width="0.2" layer="20"/>
-<wire x1="3.5" y1="3.7" x2="5" y2="2.2" width="0.2" layer="20" curve="-90"/>
-<wire x1="5" y1="2.2" x2="5" y2="1" width="0.2" layer="20"/>
-<wire x1="5" y1="1" x2="3.5" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="3.5" y1="-0.5" x2="-3.5" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-3.5" y1="-0.5" x2="-5" y2="1" width="0.2" layer="20" curve="-90"/>
-<wire x1="-5" y1="1" x2="-5" y2="2.2" width="0.2" layer="20"/>
-<wire x1="-5" y1="2.2" x2="-3.5" y2="3.7" width="0.2" layer="20" curve="-90"/>
+<wire x1="-3.5" y1="3.45" x2="3.5" y2="3.45" width="0.2" layer="20"/>
+<wire x1="3.5" y1="3.45" x2="4.75" y2="2.2" width="0.2" layer="20" curve="-90"/>
+<wire x1="4.75" y1="2.2" x2="4.75" y2="1" width="0.2" layer="20"/>
+<wire x1="4.75" y1="1" x2="3.5" y2="-0.25" width="0.2" layer="20" curve="-90"/>
+<wire x1="3.5" y1="-0.25" x2="-3.5" y2="-0.25" width="0.2" layer="20"/>
+<wire x1="-3.5" y1="-0.25" x2="-4.75" y2="1" width="0.2" layer="20" curve="-90"/>
+<wire x1="-4.75" y1="1" x2="-4.75" y2="2.2" width="0.2" layer="20"/>
+<wire x1="-4.75" y1="2.2" x2="-3.5" y2="3.45" width="0.2" layer="20" curve="-90"/>
 <text x="0" y="1.5" size="1.27" layer="20" align="center">Route Out</text>
 <wire x1="-3.5" y1="3.2" x2="3.5" y2="3.2" width="0.2" layer="51"/>
 <wire x1="3.5" y1="3.2" x2="4.5" y2="2.2" width="0.2" layer="51" curve="-90"/>
@@ -14335,7 +14335,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
-<text x="241.3" y="7.62" size="2.54" layer="94" font="vector">v01</text>
+<text x="241.3" y="7.62" size="2.54" layer="94" font="vector">v02</text>
 <text x="167.64" y="10.16" size="2.54" layer="94" font="vector">Paul Clark</text>
 </plain>
 <instances>
