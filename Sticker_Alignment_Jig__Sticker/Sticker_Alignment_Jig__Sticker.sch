@@ -14188,159 +14188,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </deviceset>
 </devicesets>
 </library>
-<library name="CORS_Panels">
-<packages>
-<package name="3.5MM_CONNECTOR">
-<wire x1="-18.15" y1="0" x2="18.15" y2="0" width="0.2" layer="51"/>
-<wire x1="18.15" y1="0" x2="18.15" y2="7.2" width="0.2" layer="51"/>
-<wire x1="18.15" y1="7.2" x2="-18.15" y2="7.2" width="0.2" layer="51"/>
-<wire x1="-18.15" y1="7.2" x2="-18.15" y2="0" width="0.2" layer="51"/>
-<wire x1="-17.65" y1="7.7" x2="17.65" y2="7.7" width="0.2" layer="20"/>
-<wire x1="17.65" y1="7.7" x2="18.65" y2="6.7" width="0.2" layer="20" curve="-90"/>
-<wire x1="18.65" y1="6.7" x2="18.65" y2="0.5" width="0.2" layer="20"/>
-<wire x1="18.65" y1="0.5" x2="17.65" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="17.65" y1="-0.5" x2="-17.65" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-17.65" y1="-0.5" x2="-18.65" y2="0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="-18.65" y1="0.5" x2="-18.65" y2="6.7" width="0.2" layer="20"/>
-<wire x1="-18.65" y1="6.7" x2="-17.65" y2="7.7" width="0.2" layer="20" curve="-90"/>
-<text x="0" y="0" size="1.27" layer="20" align="bottom-center">Route Out</text>
-<wire x1="-1.75" y1="6.9" x2="-2.05" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-2.05" y1="6.3" x2="-1.45" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-1.45" y1="6.3" x2="-1.75" y2="6.9" width="0.2" layer="51"/>
-<wire x1="1.75" y1="6.9" x2="1.45" y2="6.3" width="0.2" layer="51"/>
-<wire x1="1.45" y1="6.3" x2="2.05" y2="6.3" width="0.2" layer="51"/>
-<wire x1="2.05" y1="6.3" x2="1.75" y2="6.9" width="0.2" layer="51"/>
-<wire x1="-5.25" y1="6.9" x2="-5.55" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-5.55" y1="6.3" x2="-4.95" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-4.95" y1="6.3" x2="-5.25" y2="6.9" width="0.2" layer="51"/>
-<wire x1="-8.75" y1="6.9" x2="-9.05" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-9.05" y1="6.3" x2="-8.45" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-8.45" y1="6.3" x2="-8.75" y2="6.9" width="0.2" layer="51"/>
-<wire x1="-12.25" y1="6.9" x2="-12.55" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-12.55" y1="6.3" x2="-11.95" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-11.95" y1="6.3" x2="-12.25" y2="6.9" width="0.2" layer="51"/>
-<wire x1="-15.75" y1="6.9" x2="-16.05" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-16.05" y1="6.3" x2="-15.45" y2="6.3" width="0.2" layer="51"/>
-<wire x1="-15.45" y1="6.3" x2="-15.75" y2="6.9" width="0.2" layer="51"/>
-<wire x1="15.75" y1="6.9" x2="15.45" y2="6.3" width="0.2" layer="51"/>
-<wire x1="15.45" y1="6.3" x2="16.05" y2="6.3" width="0.2" layer="51"/>
-<wire x1="16.05" y1="6.3" x2="15.75" y2="6.9" width="0.2" layer="51"/>
-<wire x1="12.25" y1="6.9" x2="11.95" y2="6.3" width="0.2" layer="51"/>
-<wire x1="11.95" y1="6.3" x2="12.55" y2="6.3" width="0.2" layer="51"/>
-<wire x1="12.55" y1="6.3" x2="12.25" y2="6.9" width="0.2" layer="51"/>
-<wire x1="8.75" y1="6.9" x2="8.45" y2="6.3" width="0.2" layer="51"/>
-<wire x1="8.45" y1="6.3" x2="9.05" y2="6.3" width="0.2" layer="51"/>
-<wire x1="9.05" y1="6.3" x2="8.75" y2="6.9" width="0.2" layer="51"/>
-<wire x1="5.25" y1="6.9" x2="4.95" y2="6.3" width="0.2" layer="51"/>
-<wire x1="4.95" y1="6.3" x2="5.55" y2="6.3" width="0.2" layer="51"/>
-<wire x1="5.55" y1="6.3" x2="5.25" y2="6.9" width="0.2" layer="51"/>
-</package>
-<package name="USB-C">
-<wire x1="-3.5" y1="3.7" x2="3.5" y2="3.7" width="0.2" layer="20"/>
-<wire x1="3.5" y1="3.7" x2="5" y2="2.2" width="0.2" layer="20" curve="-90"/>
-<wire x1="5" y1="2.2" x2="5" y2="1" width="0.2" layer="20"/>
-<wire x1="5" y1="1" x2="3.5" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="3.5" y1="-0.5" x2="-3.5" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-3.5" y1="-0.5" x2="-5" y2="1" width="0.2" layer="20" curve="-90"/>
-<wire x1="-5" y1="1" x2="-5" y2="2.2" width="0.2" layer="20"/>
-<wire x1="-5" y1="2.2" x2="-3.5" y2="3.7" width="0.2" layer="20" curve="-90"/>
-<text x="0" y="1.5" size="1.27" layer="20" align="center">Route Out</text>
-<wire x1="-3.5" y1="3.2" x2="3.5" y2="3.2" width="0.2" layer="51"/>
-<wire x1="3.5" y1="3.2" x2="4.5" y2="2.2" width="0.2" layer="51" curve="-90"/>
-<wire x1="4.5" y1="2.2" x2="4.5" y2="1" width="0.2" layer="51"/>
-<wire x1="4.5" y1="1" x2="3.5" y2="0" width="0.2" layer="51" curve="-90"/>
-<wire x1="3.5" y1="0" x2="-3.5" y2="0" width="0.2" layer="51"/>
-<wire x1="-3.5" y1="0" x2="-4.5" y2="1" width="0.2" layer="51" curve="-90"/>
-<wire x1="-4.5" y1="1" x2="-4.5" y2="2.2" width="0.2" layer="51"/>
-<wire x1="-4.5" y1="2.2" x2="-3.5" y2="3.2" width="0.2" layer="51" curve="-90"/>
-</package>
-<package name="ETHERNET">
-<wire x1="-8.13" y1="0" x2="8.13" y2="0" width="0.2" layer="51"/>
-<wire x1="8.13" y1="0" x2="8.13" y2="13.84" width="0.2" layer="51"/>
-<wire x1="8.13" y1="13.84" x2="-8.13" y2="13.84" width="0.2" layer="51"/>
-<wire x1="-8.13" y1="13.84" x2="-8.13" y2="0" width="0.2" layer="51"/>
-<wire x1="-8.13" y1="14.84" x2="8.13" y2="14.84" width="0.2" layer="20"/>
-<wire x1="8.13" y1="14.84" x2="9.13" y2="13.84" width="0.2" layer="20" curve="-90"/>
-<wire x1="9.13" y1="13.84" x2="9.13" y2="0.5" width="0.2" layer="20"/>
-<wire x1="9.13" y1="0.5" x2="8.13" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="8.13" y1="-0.5" x2="-8.13" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-8.13" y1="-0.5" x2="-9.13" y2="0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="-9.13" y1="0.5" x2="-9.13" y2="13.84" width="0.2" layer="20"/>
-<wire x1="-9.13" y1="13.84" x2="-8.13" y2="14.84" width="0.2" layer="20" curve="-90"/>
-<text x="0" y="0" size="1.27" layer="20" align="bottom-center">Route Out</text>
-</package>
-</packages>
-<symbols>
-<symbol name="3.5MM_CONNECTOR">
-<wire x1="-17.65" y1="7.7" x2="17.65" y2="7.7" width="0.2" layer="94"/>
-<wire x1="17.65" y1="7.7" x2="18.65" y2="6.7" width="0.2" layer="94" curve="-90"/>
-<wire x1="18.65" y1="6.7" x2="18.65" y2="0.5" width="0.2" layer="94"/>
-<wire x1="18.65" y1="0.5" x2="17.65" y2="-0.5" width="0.2" layer="94" curve="-90"/>
-<wire x1="17.65" y1="-0.5" x2="-17.65" y2="-0.5" width="0.2" layer="94"/>
-<wire x1="-17.65" y1="-0.5" x2="-18.65" y2="0.5" width="0.2" layer="94" curve="-90"/>
-<wire x1="-18.65" y1="0.5" x2="-18.65" y2="6.7" width="0.2" layer="94"/>
-<wire x1="-18.65" y1="6.7" x2="-17.65" y2="7.7" width="0.2" layer="94" curve="-90"/>
-</symbol>
-<symbol name="USB-C">
-<wire x1="-3.5" y1="3.7" x2="3.5" y2="3.7" width="0.2" layer="94"/>
-<wire x1="3.5" y1="3.7" x2="5" y2="2.2" width="0.2" layer="94" curve="-90"/>
-<wire x1="5" y1="2.2" x2="5" y2="1" width="0.2" layer="94"/>
-<wire x1="5" y1="1" x2="3.5" y2="-0.5" width="0.2" layer="94" curve="-90"/>
-<wire x1="3.5" y1="-0.5" x2="-3.5" y2="-0.5" width="0.2" layer="94"/>
-<wire x1="-3.5" y1="-0.5" x2="-5" y2="1" width="0.2" layer="94" curve="-90"/>
-<wire x1="-5" y1="1" x2="-5" y2="2.2" width="0.2" layer="94"/>
-<wire x1="-5" y1="2.2" x2="-3.5" y2="3.7" width="0.2" layer="94" curve="-90"/>
-</symbol>
-<symbol name="ETHERNET">
-<wire x1="-7.13" y1="14.84" x2="7.13" y2="14.84" width="0.2" layer="94"/>
-<wire x1="7.13" y1="14.84" x2="9.13" y2="12.84" width="0.2" layer="94" curve="-90"/>
-<wire x1="9.13" y1="12.84" x2="9.13" y2="0.5" width="0.2" layer="94"/>
-<wire x1="9.13" y1="0.5" x2="8.13" y2="-0.5" width="0.2" layer="94" curve="-90"/>
-<wire x1="8.13" y1="-0.5" x2="-8.13" y2="-0.5" width="0.2" layer="94"/>
-<wire x1="-8.13" y1="-0.5" x2="-9.13" y2="0.5" width="0.2" layer="94" curve="-90"/>
-<wire x1="-9.13" y1="0.5" x2="-9.13" y2="12.84" width="0.2" layer="94"/>
-<wire x1="-9.13" y1="12.84" x2="-7.13" y2="14.84" width="0.2" layer="94" curve="-90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="3.5MM_CONNECTOR">
-<gates>
-<gate name="G$1" symbol="3.5MM_CONNECTOR" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="3.5MM_CONNECTOR">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="USB-C">
-<gates>
-<gate name="G$1" symbol="USB-C" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="USB-C">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="ETHERNET">
-<gates>
-<gate name="G$1" symbol="ETHERNET" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="ETHERNET">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -14354,9 +14201,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="SFE_LOGO_NAME_FLAME" device=".3_INCH" value="SFE_LOGO_NAME_FLAME.3_INCH"/>
 <part name="FRAME1" library="SparkFun-Aesthetics" deviceset="FRAME-LETTER" device=""/>
-<part name="U$2" library="CORS_Panels" deviceset="3.5MM_CONNECTOR" device=""/>
-<part name="U$3" library="CORS_Panels" deviceset="USB-C" device=""/>
-<part name="U$4" library="CORS_Panels" deviceset="ETHERNET" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14377,9 +14221,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="DESIGNER" x="170.434" y="11.176" size="2.7432" layer="94" font="vector"/>
 <attribute name="REV" x="236.22" y="6.604" size="2.7432" layer="94" font="vector"/>
 </instance>
-<instance part="U$2" gate="G$1" x="124.46" y="93.98" smashed="yes"/>
-<instance part="U$3" gate="G$1" x="170.18" y="93.98" smashed="yes"/>
-<instance part="U$4" gate="G$1" x="200.66" y="93.98" smashed="yes"/>
 </instances>
 <busses>
 </busses>

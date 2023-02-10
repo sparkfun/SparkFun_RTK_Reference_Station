@@ -14188,104 +14188,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </deviceset>
 </devicesets>
 </library>
-<library name="CORS_Panels">
-<packages>
-<package name="PANEL_OUTLINE">
-<description>&lt;b&gt;Panel Outline&lt;/b&gt;
-&lt;br&gt;Centered on the top surface of the PCB</description>
-<wire x1="-79.3" y1="-4.25" x2="-79.3" y2="0" width="0.2" layer="51"/>
-<wire x1="-79.3" y1="0" x2="-79.3" y2="29.25" width="0.2" layer="51"/>
-<wire x1="-79.3" y1="29.25" x2="-75.55" y2="33" width="0.2" layer="51" curve="-90"/>
-<wire x1="-75.55" y1="33" x2="75.55" y2="33" width="0.2" layer="51"/>
-<wire x1="75.55" y1="33" x2="79.3" y2="29.25" width="0.2" layer="51" curve="-90"/>
-<wire x1="79.3" y1="29.25" x2="79.3" y2="0" width="0.2" layer="51"/>
-<wire x1="79.3" y1="0" x2="79.3" y2="-4.25" width="0.2" layer="51"/>
-<wire x1="79.3" y1="-4.25" x2="75.55" y2="-8" width="0.2" layer="51" curve="-90"/>
-<wire x1="75.55" y1="-8" x2="-75.55" y2="-8" width="0.2" layer="51"/>
-<wire x1="-75.55" y1="-8" x2="-79.3" y2="-4.25" width="0.2" layer="51" curve="-90"/>
-<circle x="-75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="-75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
-<wire x1="-79.3" y1="0" x2="79.3" y2="0" width="0.2" layer="51" style="dashdot"/>
-<hole x="-75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="-4.25" drill="3.4"/>
-<hole x="-75.55" y="-4.25" drill="3.4"/>
-</package>
-<package name="LED">
-<hole x="0" y="3" drill="6"/>
-<circle x="0" y="3" radius="2.5" width="0.2" layer="51"/>
-</package>
-<package name="BUTTON">
-<hole x="0" y="4.05" drill="4"/>
-<circle x="0" y="4.05" radius="1.7" width="0.2" layer="51"/>
-</package>
-</packages>
-<symbols>
-<symbol name="PANEL_OUTLINE">
-<description>Panel Outline</description>
-<wire x1="-79.3" y1="-4.25" x2="-79.3" y2="29.25" width="0.254" layer="94"/>
-<wire x1="-79.3" y1="29.25" x2="-75.55" y2="33" width="0.254" layer="94" curve="-90"/>
-<wire x1="-75.55" y1="33" x2="75.55" y2="33" width="0.254" layer="94"/>
-<wire x1="75.55" y1="33" x2="79.3" y2="29.25" width="0.254" layer="94" curve="-90"/>
-<wire x1="79.3" y1="29.25" x2="79.3" y2="-4.25" width="0.254" layer="94"/>
-<wire x1="79.3" y1="-4.25" x2="75.55" y2="-8" width="0.254" layer="94" curve="-90"/>
-<wire x1="75.55" y1="-8" x2="-75.55" y2="-8" width="0.254" layer="94"/>
-<wire x1="-75.55" y1="-8" x2="-79.3" y2="-4.25" width="0.254" layer="94" curve="-90"/>
-<circle x="-75.55" y="29.25" radius="1.5" width="0.2" layer="94"/>
-<circle x="75.55" y="29.25" radius="1.5" width="0.2" layer="94"/>
-<circle x="-75.55" y="-4.25" radius="1.5" width="0.2" layer="94"/>
-<circle x="75.55" y="-4.25" radius="1.5" width="0.2" layer="94"/>
-</symbol>
-<symbol name="LED">
-<circle x="0" y="3" radius="2.5" width="0.2" layer="94"/>
-</symbol>
-<symbol name="BUTTON">
-<circle x="0" y="4.05" radius="1.7" width="0.2" layer="94"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="PANEL_OUTLINE">
-<description>&lt;b&gt;Panel Outline&lt;/b&gt;
-&lt;br&gt;Centered on the top surface of the PCB</description>
-<gates>
-<gate name="G$1" symbol="PANEL_OUTLINE" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="PANEL_OUTLINE">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="LED">
-<gates>
-<gate name="G$1" symbol="LED" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="LED">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="BUTTON">
-<gates>
-<gate name="G$1" symbol="BUTTON" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="BUTTON">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -14299,10 +14201,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="SFE_LOGO_NAME_FLAME" device=".3_INCH" value="SFE_LOGO_NAME_FLAME.3_INCH"/>
 <part name="FRAME1" library="SparkFun-Aesthetics" deviceset="FRAME-LETTER" device=""/>
-<part name="U$2" library="CORS_Panels" deviceset="PANEL_OUTLINE" device=""/>
-<part name="U$3" library="CORS_Panels" deviceset="LED" device=""/>
-<part name="U$13" library="CORS_Panels" deviceset="BUTTON" device=""/>
-<part name="U$14" library="CORS_Panels" deviceset="BUTTON" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14323,10 +14221,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="DESIGNER" x="170.434" y="11.176" size="2.7432" layer="94" font="vector"/>
 <attribute name="REV" x="236.22" y="6.604" size="2.7432" layer="94" font="vector"/>
 </instance>
-<instance part="U$2" gate="G$1" x="127" y="93.98" smashed="yes"/>
-<instance part="U$3" gate="G$1" x="63.5" y="96.52" smashed="yes"/>
-<instance part="U$13" gate="G$1" x="167.64" y="96.52" smashed="yes"/>
-<instance part="U$14" gate="G$1" x="137.16" y="96.52" smashed="yes"/>
 </instances>
 <busses>
 </busses>
