@@ -14162,25 +14162,25 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="79.3" y1="-4.25" x2="75.55" y2="-8" width="0.2" layer="51" curve="-90"/>
 <wire x1="75.55" y1="-8" x2="-75.55" y2="-8" width="0.2" layer="51"/>
 <wire x1="-75.55" y1="-8" x2="-79.3" y2="-4.25" width="0.2" layer="51" curve="-90"/>
-<circle x="-75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="-75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="-75.4" y="29.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="75.4" y="29.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="75.4" y="-4.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="-75.4" y="-4.25" radius="1.5" width="0.2" layer="51"/>
 <wire x1="-79.3" y1="0" x2="79.3" y2="0" width="0.2" layer="51" style="dashdot"/>
-<hole x="-75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="-4.25" drill="3.4"/>
-<hole x="-75.55" y="-4.25" drill="3.4"/>
+<hole x="-75.4" y="29.25" drill="3.4"/>
+<hole x="75.4" y="29.25" drill="3.4"/>
+<hole x="75.4" y="-4.25" drill="3.4"/>
+<hole x="-75.4" y="-4.25" drill="3.4"/>
 </package>
 <package name="USB-C">
-<wire x1="-3.5" y1="3.7" x2="3.5" y2="3.7" width="0.2" layer="20"/>
-<wire x1="3.5" y1="3.7" x2="5" y2="2.2" width="0.2" layer="20" curve="-90"/>
-<wire x1="5" y1="2.2" x2="5" y2="1" width="0.2" layer="20"/>
-<wire x1="5" y1="1" x2="3.5" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="3.5" y1="-0.5" x2="-3.5" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-3.5" y1="-0.5" x2="-5" y2="1" width="0.2" layer="20" curve="-90"/>
-<wire x1="-5" y1="1" x2="-5" y2="2.2" width="0.2" layer="20"/>
-<wire x1="-5" y1="2.2" x2="-3.5" y2="3.7" width="0.2" layer="20" curve="-90"/>
+<wire x1="-3.5" y1="3.45" x2="3.5" y2="3.45" width="0.2" layer="20"/>
+<wire x1="3.5" y1="3.45" x2="4.75" y2="2.2" width="0.2" layer="20" curve="-90"/>
+<wire x1="4.75" y1="2.2" x2="4.75" y2="1" width="0.2" layer="20"/>
+<wire x1="4.75" y1="1" x2="3.5" y2="-0.25" width="0.2" layer="20" curve="-90"/>
+<wire x1="3.5" y1="-0.25" x2="-3.5" y2="-0.25" width="0.2" layer="20"/>
+<wire x1="-3.5" y1="-0.25" x2="-4.75" y2="1" width="0.2" layer="20" curve="-90"/>
+<wire x1="-4.75" y1="1" x2="-4.75" y2="2.2" width="0.2" layer="20"/>
+<wire x1="-4.75" y1="2.2" x2="-3.5" y2="3.45" width="0.2" layer="20" curve="-90"/>
 <text x="0" y="1.5" size="1.27" layer="20" align="center">Route Out</text>
 <wire x1="-3.5" y1="3.2" x2="3.5" y2="3.2" width="0.2" layer="51"/>
 <wire x1="3.5" y1="3.2" x2="4.5" y2="2.2" width="0.2" layer="51" curve="-90"/>
@@ -14192,7 +14192,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-4.5" y1="2.2" x2="-3.5" y2="3.2" width="0.2" layer="51" curve="-90"/>
 </package>
 <package name="SMA">
-<hole x="0" y="0.635" drill="9"/>
+<hole x="0" y="0.635" drill="8.75"/>
 <circle x="0" y="0.635" radius="3.965" width="0.2" layer="51"/>
 </package>
 <package name="3.5MM_CONNECTOR">
@@ -14245,14 +14245,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="8.13" y1="0" x2="8.13" y2="13.84" width="0.2" layer="51"/>
 <wire x1="8.13" y1="13.84" x2="-8.13" y2="13.84" width="0.2" layer="51"/>
 <wire x1="-8.13" y1="13.84" x2="-8.13" y2="0" width="0.2" layer="51"/>
-<wire x1="-8.13" y1="14.84" x2="8.13" y2="14.84" width="0.2" layer="20"/>
-<wire x1="8.13" y1="14.84" x2="9.13" y2="13.84" width="0.2" layer="20" curve="-90"/>
-<wire x1="9.13" y1="13.84" x2="9.13" y2="0.5" width="0.2" layer="20"/>
-<wire x1="9.13" y1="0.5" x2="8.13" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="8.13" y1="-0.5" x2="-8.13" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-8.13" y1="-0.5" x2="-9.13" y2="0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="-9.13" y1="0.5" x2="-9.13" y2="13.84" width="0.2" layer="20"/>
-<wire x1="-9.13" y1="13.84" x2="-8.13" y2="14.84" width="0.2" layer="20" curve="-90"/>
+<wire x1="-7.63" y1="14.34" x2="7.63" y2="14.34" width="0.2" layer="20"/>
+<wire x1="7.63" y1="14.34" x2="8.63" y2="13.34" width="0.2" layer="20" curve="-90"/>
+<wire x1="8.63" y1="13.34" x2="8.63" y2="0.5" width="0.2" layer="20"/>
+<wire x1="8.63" y1="0.5" x2="7.63" y2="-0.5" width="0.2" layer="20" curve="-90"/>
+<wire x1="7.63" y1="-0.5" x2="-7.63" y2="-0.5" width="0.2" layer="20"/>
+<wire x1="-7.63" y1="-0.5" x2="-8.63" y2="0.5" width="0.2" layer="20" curve="-90"/>
+<wire x1="-8.63" y1="0.5" x2="-8.63" y2="13.34" width="0.2" layer="20"/>
+<wire x1="-8.63" y1="13.34" x2="-7.63" y2="14.34" width="0.2" layer="20" curve="-90"/>
 <text x="0" y="0" size="1.27" layer="20" align="bottom-center">Route Out</text>
 </package>
 </packages>
@@ -14436,7 +14436,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
-<text x="241.3" y="7.62" size="2.54" layer="94" font="vector">v01</text>
+<text x="241.3" y="7.62" size="2.54" layer="94" font="vector">v02</text>
 <text x="167.64" y="10.16" size="2.54" layer="94" font="vector">Paul Clark</text>
 </plain>
 <instances>

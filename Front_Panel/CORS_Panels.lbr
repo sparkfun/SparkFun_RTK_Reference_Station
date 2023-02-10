@@ -97,8 +97,8 @@
 <hole x="-75.4" y="-4.25" drill="3.4"/>
 </package>
 <package name="LED">
-<hole x="0" y="3" drill="5.5"/>
-<circle x="0" y="3" radius="2.5" width="0.2" layer="51"/>
+<hole x="0" y="3.1" drill="5.5"/>
+<circle x="0" y="3.1" radius="2.5" width="0.2" layer="51"/>
 </package>
 <package name="BUTTON">
 <hole x="0" y="4.05" drill="3.75"/>

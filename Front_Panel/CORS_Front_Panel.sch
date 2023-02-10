@@ -14162,22 +14162,22 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="79.3" y1="-4.25" x2="75.55" y2="-8" width="0.2" layer="51" curve="-90"/>
 <wire x1="75.55" y1="-8" x2="-75.55" y2="-8" width="0.2" layer="51"/>
 <wire x1="-75.55" y1="-8" x2="-79.3" y2="-4.25" width="0.2" layer="51" curve="-90"/>
-<circle x="-75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="29.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
-<circle x="-75.55" y="-4.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="-75.4" y="29.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="75.4" y="29.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="75.4" y="-4.25" radius="1.5" width="0.2" layer="51"/>
+<circle x="-75.4" y="-4.25" radius="1.5" width="0.2" layer="51"/>
 <wire x1="-79.3" y1="0" x2="79.3" y2="0" width="0.2" layer="51" style="dashdot"/>
-<hole x="-75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="29.25" drill="3.4"/>
-<hole x="75.55" y="-4.25" drill="3.4"/>
-<hole x="-75.55" y="-4.25" drill="3.4"/>
+<hole x="-75.4" y="29.25" drill="3.4"/>
+<hole x="75.4" y="29.25" drill="3.4"/>
+<hole x="75.4" y="-4.25" drill="3.4"/>
+<hole x="-75.4" y="-4.25" drill="3.4"/>
 </package>
 <package name="LED">
-<hole x="0" y="3" drill="6"/>
-<circle x="0" y="3" radius="2.5" width="0.2" layer="51"/>
+<hole x="0" y="3.1" drill="5.5"/>
+<circle x="0" y="3.1" radius="2.5" width="0.2" layer="51"/>
 </package>
 <package name="BUTTON">
-<hole x="0" y="4.05" drill="4"/>
+<hole x="0" y="4.05" drill="3.75"/>
 <circle x="0" y="4.05" radius="1.7" width="0.2" layer="51"/>
 </package>
 <package name="MICRO_SD">
@@ -14196,14 +14196,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="0" y="0" size="1.27" layer="20" align="bottom-center">Route Out</text>
 </package>
 <package name="USB-C">
-<wire x1="-3.5" y1="3.7" x2="3.5" y2="3.7" width="0.2" layer="20"/>
-<wire x1="3.5" y1="3.7" x2="5" y2="2.2" width="0.2" layer="20" curve="-90"/>
-<wire x1="5" y1="2.2" x2="5" y2="1" width="0.2" layer="20"/>
-<wire x1="5" y1="1" x2="3.5" y2="-0.5" width="0.2" layer="20" curve="-90"/>
-<wire x1="3.5" y1="-0.5" x2="-3.5" y2="-0.5" width="0.2" layer="20"/>
-<wire x1="-3.5" y1="-0.5" x2="-5" y2="1" width="0.2" layer="20" curve="-90"/>
-<wire x1="-5" y1="1" x2="-5" y2="2.2" width="0.2" layer="20"/>
-<wire x1="-5" y1="2.2" x2="-3.5" y2="3.7" width="0.2" layer="20" curve="-90"/>
+<wire x1="-3.5" y1="3.45" x2="3.5" y2="3.45" width="0.2" layer="20"/>
+<wire x1="3.5" y1="3.45" x2="4.75" y2="2.2" width="0.2" layer="20" curve="-90"/>
+<wire x1="4.75" y1="2.2" x2="4.75" y2="1" width="0.2" layer="20"/>
+<wire x1="4.75" y1="1" x2="3.5" y2="-0.25" width="0.2" layer="20" curve="-90"/>
+<wire x1="3.5" y1="-0.25" x2="-3.5" y2="-0.25" width="0.2" layer="20"/>
+<wire x1="-3.5" y1="-0.25" x2="-4.75" y2="1" width="0.2" layer="20" curve="-90"/>
+<wire x1="-4.75" y1="1" x2="-4.75" y2="2.2" width="0.2" layer="20"/>
+<wire x1="-4.75" y1="2.2" x2="-3.5" y2="3.45" width="0.2" layer="20" curve="-90"/>
 <text x="0" y="1.5" size="1.27" layer="20" align="center">Route Out</text>
 <wire x1="-3.5" y1="3.2" x2="3.5" y2="3.2" width="0.2" layer="51"/>
 <wire x1="3.5" y1="3.2" x2="4.5" y2="2.2" width="0.2" layer="51" curve="-90"/>
@@ -14228,22 +14228,22 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="6.7" y1="-6" x2="-6.7" y2="-6" width="0.2" layer="51"/>
 <wire x1="-6.7" y1="-6" x2="-7.7" y2="-5" width="0.2" layer="51" curve="-90"/>
 <text x="0" y="0" size="1.27" layer="20" align="center">Route Out</text>
-<wire x1="-9.55" y1="7.5" x2="9.55" y2="7.5" width="0.2" layer="20"/>
-<wire x1="-9.55" y1="7.5" x2="-9.55" y2="4.5" width="0.2" layer="20" curve="180"/>
-<wire x1="9.55" y1="4.5" x2="9.55" y2="7.5" width="0.2" layer="20" curve="180"/>
-<wire x1="-9.55" y1="-8.3" x2="-9.55" y2="-11.3" width="0.2" layer="20" curve="180"/>
-<wire x1="9.55" y1="-11.3" x2="9.55" y2="-8.3" width="0.2" layer="20" curve="180"/>
+<wire x1="-9.4" y1="7.35" x2="9.4" y2="7.35" width="0.2" layer="20"/>
+<wire x1="-9.4" y1="7.35" x2="-9.4" y2="4.35" width="0.2" layer="20" curve="180"/>
+<wire x1="9.4" y1="4.35" x2="9.4" y2="7.35" width="0.2" layer="20" curve="180"/>
+<wire x1="-9.4" y1="-8.05" x2="-9.4" y2="-11.05" width="0.2" layer="20" curve="180"/>
+<wire x1="9.4" y1="-11.05" x2="9.4" y2="-8.05" width="0.2" layer="20" curve="180"/>
 <text x="-6" y="4" size="0.5" layer="51">13.42 x 10.06 A/A</text>
 <text x="-6" y="6.3" size="0.5" layer="51">15.42 x 12.06 V/A</text>
-<wire x1="-9.55" y1="4.5" x2="-9.55" y2="-8.3" width="0.2" layer="20"/>
-<wire x1="9.55" y1="4.5" x2="9.55" y2="-8.3" width="0.2" layer="20"/>
-<wire x1="-9.55" y1="-11.3" x2="-7" y2="-11.3" width="0.2" layer="20"/>
-<wire x1="7" y1="-11.3" x2="9.55" y2="-11.3" width="0.2" layer="20"/>
-<wire x1="-7" y1="-11.3" x2="-7" y2="-13.8" width="0.2" layer="20"/>
-<wire x1="7" y1="-11.3" x2="7" y2="-13.8" width="0.2" layer="20"/>
-<wire x1="-7" y1="-13.8" x2="-5.5" y2="-15.3" width="0.2" layer="20" curve="90"/>
-<wire x1="5.5" y1="-15.3" x2="7" y2="-13.8" width="0.2" layer="20" curve="90"/>
-<wire x1="-5.5" y1="-15.3" x2="5.5" y2="-15.3" width="0.2" layer="20"/>
+<wire x1="-9.4" y1="4.35" x2="-9.4" y2="-8.05" width="0.2" layer="20"/>
+<wire x1="9.4" y1="4.35" x2="9.4" y2="-8.05" width="0.2" layer="20"/>
+<wire x1="-9.4" y1="-11.05" x2="-7" y2="-11.05" width="0.2" layer="20"/>
+<wire x1="7" y1="-11.05" x2="9.4" y2="-11.05" width="0.2" layer="20"/>
+<wire x1="-7" y1="-11.05" x2="-7" y2="-12.7" width="0.2" layer="20"/>
+<wire x1="7" y1="-11.05" x2="7" y2="-12.7" width="0.2" layer="20"/>
+<wire x1="-7" y1="-12.7" x2="-5.5" y2="-14.2" width="0.2" layer="20" curve="90"/>
+<wire x1="5.5" y1="-14.2" x2="7" y2="-12.7" width="0.2" layer="20" curve="90"/>
+<wire x1="-5.5" y1="-14.2" x2="5.5" y2="-14.2" width="0.2" layer="20"/>
 </package>
 </packages>
 <symbols>
@@ -14442,7 +14442,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
-<text x="241.3" y="7.62" size="2.54" layer="94" font="vector">v01</text>
+<text x="241.3" y="7.62" size="2.54" layer="94" font="vector">v02</text>
 <text x="167.64" y="10.16" size="2.54" layer="94" font="vector">Paul Clark</text>
 </plain>
 <instances>
