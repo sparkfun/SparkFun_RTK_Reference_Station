@@ -35942,6 +35942,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY66" library="SparkFun-PowerSymbols" deviceset="3.3V_SW" device=""/>
 <part name="DET" library="SparkFun-Connectors" deviceset="TEST-POINT" device="POGO_PTH" value="TEST-POINTPOGO_PTH"/>
 <part name="U8" library="SparkFun-IC-Amplifiers" deviceset="MCP6021" device="T-E/OT" value="MCP6021T"/>
+<part name="R66" library="SparkFun-Resistors" deviceset="100KOHM" device="-0603-1/10W-1%" value="100k"/>
 </parts>
 <sheets>
 <sheet>
@@ -36103,6 +36104,9 @@ Address: 0x60</text>
 <text x="105.41" y="7.62" size="1.27" layer="97" font="vector" align="bottom-center">Open jumper to isolate shield</text>
 <text x="215.9" y="40.64" size="2.54" layer="94" font="vector" align="top-right">I/O Connector</text>
 <wire x1="220.98" y1="43.18" x2="220.98" y2="0" width="0.1524" layer="97" style="longdash"/>
+<text x="390.906" y="240.284" size="1.778" layer="97" font="vector">Vcc Max: 5.5V</text>
+<text x="276.606" y="194.564" size="1.778" layer="97" font="vector">Vcc Max: 5.5V</text>
+<text x="274.066" y="171.704" size="1.778" layer="97" font="vector">Vcc Max: 5.5V</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0" smashed="yes"/>
@@ -36983,13 +36987,13 @@ Address: 0x60</text>
 <instance part="GND63" gate="1" x="373.38" y="243.84" smashed="yes">
 <attribute name="VALUE" x="373.38" y="243.586" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="R23" gate="G$1" x="393.7" y="261.62" smashed="yes">
-<attribute name="NAME" x="389.89" y="263.144" size="1.778" layer="95" font="vector" align="bottom-center"/>
-<attribute name="VALUE" x="397.51" y="263.144" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
+<instance part="R23" gate="G$1" x="386.08" y="261.62" smashed="yes">
+<attribute name="NAME" x="382.27" y="258.064" size="1.778" layer="95" font="vector" align="bottom-center"/>
+<attribute name="VALUE" x="389.89" y="258.064" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
 </instance>
-<instance part="R44" gate="G$1" x="383.54" y="269.24" smashed="yes">
-<attribute name="NAME" x="379.73" y="270.764" size="1.778" layer="95" font="vector" align="bottom-center"/>
-<attribute name="VALUE" x="387.35" y="270.764" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
+<instance part="R44" gate="G$1" x="386.08" y="269.24" smashed="yes">
+<attribute name="NAME" x="382.27" y="270.764" size="1.778" layer="95" font="vector" align="bottom-center"/>
+<attribute name="VALUE" x="389.89" y="270.764" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
 </instance>
 <instance part="PW+" gate="JP1" x="233.68" y="157.48" smashed="yes" rot="R180">
 <attribute name="NAME" x="233.68" y="160.782" size="1.778" layer="95" font="vector" rot="R180" align="center"/>
@@ -37406,6 +37410,10 @@ Address: 0x60</text>
 <instance part="U8" gate="G2" x="350.52" y="256.54" smashed="yes">
 <attribute name="NAME" x="347.218" y="251.46" size="1.778" layer="95" font="vector" rot="R90"/>
 <attribute name="VALUE" x="355.6" y="251.46" size="1.778" layer="95" font="vector" rot="R90"/>
+</instance>
+<instance part="R66" gate="G$1" x="386.08" y="264.16" smashed="yes" rot="R180">
+<attribute name="NAME" x="382.27" y="267.716" size="1.778" layer="95" font="vector" rot="R180" align="bottom-center"/>
+<attribute name="VALUE" x="389.89" y="267.716" size="1.778" layer="96" font="vector" align="top-center"/>
 </instance>
 </instances>
 <busses>
@@ -39770,27 +39778,31 @@ Address: 0x60</text>
 </net>
 <net name="N$18" class="0">
 <segment>
-<wire x1="381" y1="261.62" x2="373.38" y2="261.62" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="261.62" x2="373.38" y2="261.62" width="0.1524" layer="91"/>
 <wire x1="373.38" y1="269.24" x2="373.38" y2="261.62" width="0.1524" layer="91"/>
 <pinref part="R18" gate="G$1" pin="2"/>
 <pinref part="R44" gate="G$1" pin="1"/>
-<wire x1="378.46" y1="269.24" x2="373.38" y2="269.24" width="0.1524" layer="91"/>
+<wire x1="381" y1="269.24" x2="373.38" y2="269.24" width="0.1524" layer="91"/>
 <pinref part="R23" gate="G$1" pin="1"/>
 <wire x1="373.38" y1="259.08" x2="373.38" y2="261.62" width="0.1524" layer="91"/>
 <junction x="373.38" y="261.62"/>
 <pinref part="U8" gate="G1" pin="-IN"/>
-<wire x1="391.16" y1="254" x2="381" y2="254" width="0.1524" layer="91"/>
-<wire x1="381" y1="254" x2="381" y2="261.62" width="0.1524" layer="91"/>
-<wire x1="381" y1="261.62" x2="388.62" y2="261.62" width="0.1524" layer="91"/>
-<junction x="381" y="261.62"/>
+<wire x1="391.16" y1="254" x2="378.46" y2="254" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="254" x2="378.46" y2="261.62" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="261.62" x2="381" y2="261.62" width="0.1524" layer="91"/>
+<junction x="378.46" y="261.62"/>
+<pinref part="R66" gate="G$1" pin="2"/>
+<wire x1="381" y1="264.16" x2="378.46" y2="264.16" width="0.1524" layer="91"/>
+<wire x1="378.46" y1="264.16" x2="378.46" y2="261.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$26" class="0">
 <segment>
 <wire x1="408.94" y1="269.24" x2="408.94" y2="261.62" width="0.1524" layer="91"/>
 <pinref part="R23" gate="G$1" pin="2"/>
-<wire x1="398.78" y1="261.62" x2="408.94" y2="261.62" width="0.1524" layer="91"/>
+<wire x1="391.16" y1="261.62" x2="393.7" y2="261.62" width="0.1524" layer="91"/>
 <pinref part="V_TP" gate="G$1" pin="2"/>
+<wire x1="393.7" y1="261.62" x2="408.94" y2="261.62" width="0.1524" layer="91"/>
 <wire x1="403.86" y1="269.24" x2="408.94" y2="269.24" width="0.1524" layer="91"/>
 <pinref part="U8" gate="G1" pin="OUT"/>
 <pinref part="R9" gate="R1" pin="2"/>
@@ -39799,13 +39811,17 @@ Address: 0x60</text>
 <wire x1="408.94" y1="261.62" x2="408.94" y2="251.46" width="0.1524" layer="91"/>
 <junction x="408.94" y="261.62"/>
 <junction x="408.94" y="251.46"/>
+<pinref part="R66" gate="G$1" pin="1"/>
+<wire x1="391.16" y1="264.16" x2="393.7" y2="264.16" width="0.1524" layer="91"/>
+<wire x1="393.7" y1="264.16" x2="393.7" y2="261.62" width="0.1524" layer="91"/>
+<junction x="393.7" y="261.62"/>
 </segment>
 </net>
 <net name="N$31" class="0">
 <segment>
 <pinref part="R44" gate="G$1" pin="2"/>
 <pinref part="V_TP" gate="G$1" pin="1"/>
-<wire x1="388.62" y1="269.24" x2="393.7" y2="269.24" width="0.1524" layer="91"/>
+<wire x1="391.16" y1="269.24" x2="393.7" y2="269.24" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$36" class="0">
@@ -40206,9 +40222,6 @@ Address: 0x60</text>
 <errors>
 <approved hash="104,1,314.96,99.06,J4,1,GND,,,"/>
 <approved hash="104,1,314.96,101.6,J4,2,3.3V_SW,,,"/>
-<approved hash="104,1,408.94,264.16,U8,+VS,5V,,,"/>
-<approved hash="104,1,408.94,256.54,U8,-VS,GND,,,"/>
-<approved hash="104,1,408.94,254,U8,PAD,GND,,,"/>
 <approved hash="104,1,129.54,231.14,U5,CPAD,GND,,,"/>
 <approved hash="104,1,129.54,233.68,U5,VCC,3.3V,,,"/>
 <approved hash="104,1,314.96,68.58,J11,1,GND,,,"/>
