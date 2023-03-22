@@ -350,7 +350,7 @@ bool processOneRequest(bool process, const timeval * recTv, const timeval * sync
 
     // Add the transmit time - i.e. now!
     timeval txTime;
-    gettimeofday(&txTime, (timezone *)&tz_utc);
+    gettimeofday(&txTime, NULL);
     packet.transmitTimestampSeconds = packet.convertUnixSecondsToNTP(txTime.tv_sec); // Unix -> NTP
     packet.transmitTimestampFraction = packet.convertMicrosToFraction(txTime.tv_usec); // Micros to 1/2^32
 

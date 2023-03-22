@@ -43,7 +43,10 @@
 #include "sslCerts.h"
 
 #include <Esp.h>
-#include <time.h>
+#include <ESP32Time.h> //http://librarymanager/All#ESP32Time by FBiego v2.0.0
+#include "time.h"
+#include <sys/time.h>
+ESP32Time rtc;
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Pin definitions
@@ -117,7 +120,6 @@ volatile bool syncRTC = true;                   // Flag to indicate if the RTC s
 volatile struct timeval gnssTv;                 // This will hold the GNSS time
 volatile struct timeval gnssSyncTv;             // This will hold the time the GNSS was last sync'd
 volatile struct timeval ethernetTv;             // This will hold the time the Ethernet packet arrived
-const timezone tz_utc = { 0, 0 };               // Set the timezone to UTC
 volatile bool timeFullyResolved = false;        // Record if GNSS time is fully resolved
 volatile unsigned long lastRTCsync = 0;         // Record the millis when the RTC is sync'd
 volatile unsigned long gnssUTCreceived = 0;     // Record the millis when GNSS time is received
@@ -145,7 +147,7 @@ void tpISR()
         {
           if (tAcc < tAccLimit) // Only sync if the tAcc is better than tAccLimit
           {
-            settimeofday((const timeval *)&gnssTv, &tz_utc); // Sync the RTC
+            rtc.setTime(gnssTv.tv_sec, gnssTv.tv_usec); // Sync the RTC
             lastRTCsync = millis(); // Update lastSync
             gnssSyncTv.tv_sec = gnssTv.tv_sec; // Store the timeval of the sync
             gnssSyncTv.tv_usec = gnssTv.tv_usec;
@@ -367,8 +369,7 @@ void loop()
   static unsigned long previousRTCsync = 0;
   if (previousRTCsync != lastRTCsync)
   {
-    struct tm timeinfo;
-    getLocalTime(&timeinfo);
+    struct tm timeinfo = rtc.getTimeStruct();
     Serial.println(&timeinfo, "RTC re-sync'd at: %A, %B %d %Y %H:%M:%S");
     Serial.print("tAcc is ");
     Serial.print(tAcc);
