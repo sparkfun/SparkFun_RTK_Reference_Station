@@ -1,7 +1,5 @@
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // GNSS PVT Callback: newPVTdata will be called when new NAV PVT data arrives.
-// It is sent ahead of the top-of-second and contains the UTC time for the next top-of-second
-// as indicated by the TP pulse.
 // See u-blox_structs.h for the full definition of UBX_NAV_PVT_data_t
 //         _____  You can use any name you like for the callback. Use the same name when you call setAutoPVTcallback
 //        /                  _____  This _must_ be UBX_NAV_PVT_data_t
@@ -10,35 +8,39 @@
 //        |                 |              |
 void newPVTdata(UBX_NAV_PVT_data_t *ubxDataStruct)
 {
-  // Convert date and time into Unix epoch
-  uint32_t t = SFE_UBLOX_DAYS_FROM_1970_TO_2020;                                                             // Jan 1st 2020 as days from Jan 1st 1970
-  t += (uint32_t)SFE_UBLOX_DAYS_SINCE_2020[ubxDataStruct->year - 2020];                                      // Add on the number of days since 2020
-  t += (uint32_t)SFE_UBLOX_DAYS_SINCE_MONTH[ubxDataStruct->year % 4 == 0 ? 0 : 1][ubxDataStruct->month - 1]; // Add on the number of days since Jan 1st
-  t += (uint32_t)ubxDataStruct->day - 1;                                                                     // Add on the number of days since the 1st of the month
-  t *= 24;                                                                                                   // Convert to hours
-  t += (uint32_t)ubxDataStruct->hour;                                                                        // Add on the hour
-  t *= 60;                                                                                                   // Convert to minutes
-  t += (uint32_t)ubxDataStruct->min;                                                                         // Add on the minute
-  t *= 60;                                                                                                   // Convert to seconds
-  t += (uint32_t)ubxDataStruct->sec;                                                                         // Add on the second
-
-  int32_t us = ubxDataStruct->nano / 1000;                                                                   // Convert nanos to micros
-  uint32_t micro;
-  // Adjust t if nano is negative
-  if (us < 0)
-  {
-    micro = (uint32_t)(us + 1000000); // Make nano +ve
-    t--;                              // Decrement t by 1 second
-  }
-  else
-  {
-    micro = us;
-  }
-
-  gnssTv.tv_sec = time_t(t); // Store the time in timeval format
-  gnssTv.tv_usec = micro;
   timeFullyResolved = ubxDataStruct->valid.bits.fullyResolved;
   tAcc = ubxDataStruct->tAcc;
+}
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// GNSS TIM TP Callback: newTIMTPdata will be called when new TIM TP data arrives.
+// It is sent ahead of the top-of-second and contains the UTC time for the next top-of-second
+// as indicated by the TP pulse.
+// See u-blox_structs.h for the full definition of UBX_TIM_TP_data_t
+//         _____  You can use any name you like for the callback. Use the same name when you call setAutoTIMTPcallback
+//        /                  _____  This _must_ be UBX_TIM_TP_data_t
+//        |                 /               _____ You can use any name you like for the struct
+//        |                 |              /
+//        |                 |              |
+void newTIMTPdata(UBX_TIM_TP_data_t *ubxDataStruct)
+{
+  // Convert the time pulse of week to Unix Epoch
+  uint32_t tow = ubxDataStruct->week - SFE_UBLOX_JAN_1ST_2020_WEEK; //Calculate the number of weeks since Jan 1st 2020
+  tow *= SFE_UBLOX_SECS_PER_WEEK; //Convert weeks to seconds
+  tow += SFE_UBLOX_EPOCH_WEEK_2086; //Add the TOW for Jan 1st 2020
+  tow += ubxDataStruct->towMS / 1000; //Add the TOW for the next TP
+
+  uint32_t us = ubxDataStruct->towMS % 1000; //Extract the milliseconds
+  us *= 1000; // Convert to microseconds
+
+  double subMS = ubxDataStruct->towSubMS; //Get towSubMS (ms * 2^-32)
+  subMS *= pow(2.0, -32.0); //Convert to milliseconds
+  subMS *= 1000; //Convert to microseconds
+
+  us += (uint32_t)subMS; // Add subMS
+  
+  gnssTv.tv_sec = tow; // Store the time in timeval format
+  gnssTv.tv_usec = us;  
   gnssUTCreceived = millis();
 }
 
@@ -81,6 +83,7 @@ bool configureGNSS()
   success &= theGNSS.sendCfgValset();
 
   success &= theGNSS.setAutoPVTcallbackPtr(&newPVTdata); // Enable automatic NAV PVT messages with callback to newPVTdata
+  success &= theGNSS.setAutoTIMTPcallbackPtr(&newTIMTPdata); // Enable automatic TIM TP messages with callback to newTIMTPdata
 
   // Tell the module to return UBX_MGA_ACK_DATA0 messages when we push the AssistNow data
   success &= theGNSS.setAckAiding(1);

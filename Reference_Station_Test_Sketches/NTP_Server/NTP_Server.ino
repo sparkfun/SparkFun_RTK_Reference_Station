@@ -126,7 +126,7 @@ volatile unsigned long gnssUTCreceived = 0;     // Record the millis when GNSS t
 const unsigned long resyncAfterMillis = 60000;  // Re-sync every minute - for testing only. Once per hour should be more than adequate
 const unsigned long gnssStaleAfter = 999;       // Treat GNSS time as stale after this many millis
 volatile uint32_t tAcc;                         // Record the GNSS time accuracy
-const uint32_t tAccLimit = 5000;                // Only sync if the time accuracy estimate is better than 15us (5000 nanoseconds)
+const uint32_t tAccLimit = 5000;                // Only sync if the time accuracy estimate is better than 5us (5000 nanoseconds)
 volatile uint8_t sockIndex;                     // The W5500 socket index for the timeServer - so we can enable and read the correct interrupt
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -148,7 +148,7 @@ void tpISR()
           if (tAcc < tAccLimit) // Only sync if the tAcc is better than tAccLimit
           {
             rtc.setTime(gnssTv.tv_sec, gnssTv.tv_usec); // Sync the RTC
-            lastRTCsync = millis(); // Update lastSync
+            lastRTCsync = millisNow; // Update lastSync
             gnssSyncTv.tv_sec = gnssTv.tv_sec; // Store the timeval of the sync
             gnssSyncTv.tv_usec = gnssTv.tv_usec;
           }
