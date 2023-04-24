@@ -24724,9 +24724,9 @@ These are the minimums &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabili
 <attribute name="PROD_ID" value="RES-08270" x="119.0625" y="53.34" size="1.778" layer="27" ratio="15" rot="R180" display="off"/>
 <attribute name="VALUE" x="119.0625" y="54.102" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
-<element name="U11" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="OPA344" x="128.5875" y="78.74" smashed="yes" rot="R90">
+<element name="U11" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="MCP6021T" x="128.5875" y="78.74" smashed="yes" rot="R90">
 <attribute name="NAME" x="128.5875" y="76.835" size="0.6096" layer="25" font="vector" ratio="20" rot="R180" align="bottom-center"/>
-<attribute name="PROD_ID" value="IC-08251" x="124.7775" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
+<attribute name="PROD_ID" value="IC-12504" x="124.7775" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
 <attribute name="VALUE" x="128.5875" y="81.28" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="bottom-center"/>
 </element>
 <element name="C54" library="SparkFun-Capacitors" package="0603" value="0.1uF" x="125.4125" y="78.74" smashed="yes" rot="R90">
@@ -24768,9 +24768,9 @@ These are the minimums &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabili
 <attribute name="PROD_ID" value="RES-07856" x="132.3975" y="78.74" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
 <attribute name="VALUE" x="133.1595" y="78.74" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
-<element name="U13" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="OPA344" x="128.5875" y="74.93" smashed="yes" rot="R90">
+<element name="U13" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="MCP6021T" x="128.5875" y="74.93" smashed="yes" rot="R90">
 <attribute name="NAME" x="128.5875" y="73.025" size="0.6096" layer="25" font="vector" ratio="20" rot="R180" align="bottom-center"/>
-<attribute name="PROD_ID" value="IC-08251" x="128.5875" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
+<attribute name="PROD_ID" value="IC-12504" x="128.5875" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
 <attribute name="VALUE" x="128.5875" y="77.47" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="bottom-center"/>
 </element>
 <element name="R57" library="SparkFun-Resistors" package="0603" value="10k" x="134.3025" y="71.12" smashed="yes" rot="R270">

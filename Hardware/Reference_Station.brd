@@ -207,10 +207,11 @@
 <wire x1="0.3175" y1="101.6" x2="0.3175" y2="0" width="0.2032" layer="20"/>
 <dimension x1="0" y1="101.6" x2="0" y2="0" x3="-8.89" y3="50.8" textsize="1.778" textratio="15" layer="47" dtype="vertical" unit="inch"/>
 <text x="213.36" y="0" size="1.778" layer="51" font="vector" ratio="15">Paul Clark</text>
-<text x="160.02" y="49.53" size="1.778" layer="51" font="vector" ratio="15" align="top-left">4-Layers
-1.6mm Thickness
-1oz Copper
-Lead-Free HASL Finish
+<text x="160.02" y="49.53" size="1.778" layer="51" font="vector" ratio="15" align="top-left">JLCPCB JLC-7628 Impedance Control
+4-Layers
+Thickness: 1.6mm
+Outer Copper: 1oz
+Finish: HASL Lead Free
 Red Solder Resist
 White Silkscreen
 </text>
@@ -24745,10 +24746,10 @@ These are the minimums &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabili
 <attribute name="PROD_ID" value="RES-08270" x="119.38" y="53.34" size="1.778" layer="27" ratio="15" rot="R180" display="off"/>
 <attribute name="VALUE" x="119.38" y="54.102" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
-<element name="U11" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="OPA344" x="128.905" y="78.74" smashed="yes" rot="R90">
+<element name="U11" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="MCP6021T" x="128.905" y="78.74" smashed="yes" rot="R90">
 <attribute name="NAME" x="128.905" y="76.835" size="0.6096" layer="25" font="vector" ratio="20" rot="R180" align="bottom-center"/>
-<attribute name="PROD_ID" value="IC-08251" x="125.095" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
-<attribute name="VALUE" x="128.905" y="81.28" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="bottom-center"/>
+<attribute name="PROD_ID" value="IC-12504" x="125.095" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
+<attribute name="VALUE" value="MCP6021T" x="128.905" y="81.28" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="bottom-center"/>
 </element>
 <element name="C54" library="SparkFun-Capacitors" package="0603" value="0.1uF" x="125.73" y="78.74" smashed="yes" rot="R90">
 <attribute name="NAME" x="125.168" y="78.74" size="0.6096" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
@@ -24789,10 +24790,10 @@ These are the minimums &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabili
 <attribute name="PROD_ID" value="RES-07856" x="132.715" y="78.74" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
 <attribute name="VALUE" x="133.477" y="78.74" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
-<element name="U13" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="OPA344" x="128.905" y="74.93" smashed="yes" rot="R90">
+<element name="U13" library="SparkFun-IC-Amplifiers" package="SOT23-5" value="MCP6021T" x="128.905" y="74.93" smashed="yes" rot="R90">
 <attribute name="NAME" x="128.905" y="73.025" size="0.6096" layer="25" font="vector" ratio="20" rot="R180" align="bottom-center"/>
-<attribute name="PROD_ID" value="IC-08251" x="128.905" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
-<attribute name="VALUE" x="128.905" y="77.47" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="bottom-center"/>
+<attribute name="PROD_ID" value="IC-12504" x="128.905" y="74.93" size="1.778" layer="27" ratio="15" rot="R90" display="off"/>
+<attribute name="VALUE" value="MCP6021T" x="128.905" y="77.47" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="bottom-center"/>
 </element>
 <element name="R57" library="SparkFun-Resistors" package="0603" value="10k" x="134.62" y="71.12" smashed="yes" rot="R270">
 <attribute name="NAME" x="135.382" y="71.12" size="0.6096" layer="25" font="vector" ratio="20" rot="R270" align="bottom-center"/>

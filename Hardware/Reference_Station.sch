@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.05" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -35123,37 +35123,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="OPA344" prefix="U">
-<description>&lt;h3&gt;&lt;/h3&gt;
-&lt;p&gt;Single gate rail-to-rail output op-amp. Inputs extend 300mV past rails.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.ti.com/product/OPA344"&gt;Datasheet&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;SparkFun Products&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.sparkfun.com/products/8883"&gt;SparkFun Low Current Sensor&lt;/a&gt; (SEN-08883)&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.sparkfun.com/products/12758"&gt;SparkFun Electret Microphone Breakout&lt;/a&gt; (BOB-12758)&lt;/li&gt;
-&lt;/ul&gt;</description>
-<gates>
-<gate name="G1" symbol="OP-AMP" x="-10.16" y="0"/>
-<gate name="G2" symbol="POWER_CONSORT" x="7.62" y="0"/>
-</gates>
-<devices>
-<device name="" package="SOT23-5">
-<connects>
-<connect gate="G1" pin="+IN" pad="3"/>
-<connect gate="G1" pin="-IN" pad="4"/>
-<connect gate="G1" pin="OUT" pad="1"/>
-<connect gate="G2" pin="P$V+" pad="5"/>
-<connect gate="G2" pin="P$V-" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="IC-08251" constant="no"/>
-<attribute name="VALUE" value="OPA344" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="MCP6021">
 <description>&lt;h3&gt;MCP6021T-E/OT OP AMP&lt;/h3&gt;
 &lt;p&gt;Rail-to-rail input/output op-amp with 10 MHz bandwidth.&lt;/p&gt;
@@ -35826,7 +35795,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="SUPPLY57" library="SparkFun-PowerSymbols" deviceset="3.3V_SW" device=""/>
 <part name="R46" library="SparkFun-Resistors" deviceset="33OHM" device="-0603-1/10W-1%" value="33"/>
 <part name="R47" library="SparkFun-Resistors" deviceset="33OHM" device="-0603-1/10W-1%" value="33"/>
-<part name="U11" library="SparkFun-IC-Amplifiers" deviceset="OPA344" device="" value="OPA344"/>
+<part name="U11" library="SparkFun-IC-Amplifiers" deviceset="MCP6021" device="T-E/OT" value="MCP6021T"/>
 <part name="C54" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-25V-5%" value="0.1uF"/>
 <part name="GND93" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND94" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
@@ -35843,7 +35812,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND91" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="SUPPLY60" library="SparkFun-PowerSymbols" deviceset="3.3V" device=""/>
 <part name="R56" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="1k"/>
-<part name="U13" library="SparkFun-IC-Amplifiers" deviceset="OPA344" device="" value="OPA344"/>
+<part name="U13" library="SparkFun-IC-Amplifiers" deviceset="MCP6021" device="T-E/OT" value="MCP6021T"/>
 <part name="GND92" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="SUPPLY62" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="R57" library="SparkFun-Resistors" deviceset="10KOHM" device="-0603-1/10W-1%" value="10k"/>
