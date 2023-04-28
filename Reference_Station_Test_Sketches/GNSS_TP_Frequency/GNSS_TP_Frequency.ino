@@ -82,7 +82,7 @@ void setup()
 
 void loop()
 {
-  const uint32_t pulseFreqs[] = { 1, 1000, 1000000, 10000000 }; // 1Hz, 1kHz, 1MHz, 10MHz
+  const uint32_t pulseFreqs[] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000 }; // 1Hz, 10Hz, 100Hz, 1kHz, 10kHz, 100kHz, 1MHz, 10MHz
   static uint8_t pulseFreq = 0;
 
   if (Serial.available()) // Wait for a key press
