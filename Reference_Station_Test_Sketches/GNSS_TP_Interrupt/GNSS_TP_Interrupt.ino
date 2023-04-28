@@ -58,6 +58,8 @@ void setup()
 
   pinMode(STAT_LED, OUTPUT);
 
+  pinMode(GNSS_INT, INPUT); //Needed on ESP32 v2.0.2
+
   delay(1000);
 
   Serial.begin(115200);
