@@ -44,7 +44,7 @@
 
 #define USE_MGA_ACKs // Uncomment this line to use the UBX_MGA_ACK_DATA0 acknowledgements
 
-#define USE_SERVER_ASSISTANCE // Uncomment this line to include the position in the AssistNow data request
+//#define USE_SERVER_ASSISTANCE // Uncomment this line to include the position in the AssistNow data request
 
 #include <SPI.h> // Needed for SPI to GNSS
 #include <HTTPClient.h>
@@ -70,20 +70,20 @@ const char getGNSS[] = "gnss=gps,glo,bds,gal;"; // GNSS can be: gps,qzss,glo,bds
 const char getDataType[] = "datatype=eph,alm,aux;"; // Data type can be: eph,alm,aux,pos
 
 #ifdef USE_SERVER_ASSISTANCE
-// Use 55 degrees (*10^7) north, 1 degree (*10^7) west, 100m (10000cm) altitude, 100km (10000000cm) accuracy. Replace these with your position.
+// SF HQ is at 40.1 degrees (*10^7) north, 105.2 degrees (*10^7) west, 1500m (150000cm) altitude, 100km (10000000cm) accuracy. Replace these with your position.
 // The units for lat and lon are degrees * 1e-7 (WGS84)
 // The units for alt (WGS84) and posAcc (stddev) are cm.
 
-const char useLatitude[] = "lat=55.0;"; // Use an approximate latitude of 55 degrees north. Replace this with your latitude.
-const char useLongitude[] = "lon=-1.0;"; // Use an approximate longitude of 1 degree west. Replace this with your longitude.
-const char useAlt[] = "alt=100;"; // Use an approximate latitude of 100m above WGS84. Replace this with your altitude.
+const char useLatitude[] = "lat=40.1;"; // Use an approximate latitude of 40.1 degrees north. Replace this with your latitude.
+const char useLongitude[] = "lon=-105.2;"; // Use an approximate longitude of 105.2 degrees west. Replace this with your longitude.
+const char useAlt[] = "alt=1500;"; // Use an approximate latitude of 100m above WGS84. Replace this with your altitude.
 const char usePosAcc[] = "pacc=100000;"; // Use a position accuracy of 100000m (100km)
-
-const int32_t myLat = 550000000; // Replace this with your latitude.
-const int32_t myLon = -10000000; // Replace this with your longitude.
-const int32_t myAlt = 10000; // Replace this with your altitude.
-const uint32_t posAcc = 10000000;
 #endif
+
+const int32_t myLat = 401000000; // Replace this with your latitude (degrees * 1e-7)
+const int32_t myLon = -1502000000; // Replace this with your longitude (degrees * 1e-7)
+const int32_t myAlt = 150000; // Replace this with your altitude (cm)
+const uint32_t posAcc = 10000000; // Position accuracy (cm)
 
 void setup()
 {
