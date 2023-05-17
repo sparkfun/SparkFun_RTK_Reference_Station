@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.05" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -35875,7 +35875,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="RESET" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-RIGHT-ANGLE-8-020" value="MOMENTARY-SWITCH-SPST-PTH-RIGHT-ANGLE-8-020"/>
 <part name="BOOT" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-PTH-RIGHT-ANGLE-8-020" value="MOMENTARY-SWITCH-SPST-PTH-RIGHT-ANGLE-8-020"/>
 <part name="LED" library="SparkFun-Jumpers" deviceset="JUMPER-SMT_2_NC_TRACE" device="_SILK" package3d_urn="urn:adsk.eagle:package:39281/1" value="JUMPER-SMT_2_NC_TRACE_SILK"/>
-<part name="D2" library="SparkFun-LED" deviceset="LED-RIGHT-ANGLE-PTH" device="-BLUE"/>
+<part name="D2" library="SparkFun-LED" deviceset="LED-RIGHT-ANGLE-PTH" device="-GREEN" value="LED-RIGHT-ANGLE-PTH-GREEN"/>
 <part name="R62" library="SparkFun-Resistors" deviceset="470OHM" device="-0603-1/10W-1%" value="470"/>
 <part name="C5" library="SparkFun-Capacitors" deviceset="2.2UF" device="-0603-10V-20%" value="2.2uF"/>
 <part name="GND16" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
@@ -40195,13 +40195,13 @@ Address: 0x60</text>
 <approved hash="104,1,129.54,233.68,U5,VCC,3.3V,,,"/>
 <approved hash="104,1,314.96,68.58,J11,1,GND,,,"/>
 <approved hash="104,1,314.96,71.12,J11,2,3.3V_SW,,,"/>
-<approved hash="113,1,103.463,202.004,J1,,,,,"/>
+<approved hash="113,1,103.463,201.985,J1,,,,,"/>
 <approved hash="113,1,387.574,93.98,Q1,,,,,"/>
-<approved hash="113,1,17.1027,26.7437,J6,,,,,"/>
+<approved hash="113,1,17.1027,26.7246,J6,,,,,"/>
 <approved hash="113,1,206.417,263.334,J8,,,,,"/>
 <approved hash="113,1,316.006,205.74,Q2,,,,,"/>
-<approved hash="113,1,106.003,26.7437,J5,,,,,"/>
-<approved hash="113,1,156.803,23.0226,J13,,,,,"/>
+<approved hash="113,1,106.003,26.7246,J5,,,,,"/>
+<approved hash="113,1,156.803,22.9921,J13,,,,,"/>
 </errors>
 </schematic>
 </drawing>
