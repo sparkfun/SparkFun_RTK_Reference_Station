@@ -1,13 +1,11 @@
 /*
   SparkFun GNSS Reference Station Test Sketch
 
-  Configuring the GNSS to automatically send RXM SFRBX and RAWX reports at 4Hz over SPI
-  and log them to file on SD card using full 4-bit SDIO.
-
-  Also (optionally) logs NMEA and RTCM.
+  Configuring the GNSS to automatically send RXM SFRBX and RAWX reports at 20Hz over SPI
+  and log them to file on SD card using full 4-bit SDIO. Also (optionally) logs NMEA and RTCM.
 
   Memory use:
-  GNSS file buffer: 4096
+  GNSS file buffer: 65535
   GNSS RTCM buffer: 4096
   Intermediate myBuffer: 512
 
@@ -40,7 +38,6 @@
   A35 : Board Detect (1.1V)
 */
 
-#define DISABLE_SD   0 // Change this to 1 to disable SD logging
 #define DISABLE_NMEA 0 // Change this to 1 to disable NMEA
 #define DISABLE_RTCM 0 // Change this to 1 to disable RTCM
 
@@ -49,11 +46,9 @@ const int ETHERNET_CS = 27; // Chip select for the WizNet 5500
 const int PWREN = 32; // 3V3_SW and SDIO Enable
 const int STAT_LED = 26;
 
-#if !DISABLE_SD
 #include "FS.h"
 #include "SD_MMC.h"
 File myFile;
-#endif
 
 #define sdWriteSize 512     // Write data to the SD card in blocks of n*512 bytes
 uint8_t *myBuffer;          // Use myBuffer to hold the data while we write it to SD card
@@ -64,8 +59,9 @@ uint8_t *myBuffer;          // Use myBuffer to hold the data while we write it t
 #include <SparkFun_u-blox_GNSS_v3.h> //Click here to get the library: http://librarymanager/All#SparkFun_u-blox_GNSS_v3
 SFE_UBLOX_GNSS_SPI myGNSS;
 
-#define fileBufferSize 4096 // Allocate RAM for UBX message storage
-#define navRate 4           // Set the Nav Rate (Frequency) to 20Hz
+#define fileBufferSize 65535 // Allocate RAM for UBX/RTCM/NMEA message storage
+#define rtcmBufferSize 4096  // Allocate RAM for intermediate RTCM message storage
+#define navRate 20           // Set the Nav Rate (Frequency) to 20Hz
 
 unsigned long lastPrint; // Record when the last Serial print took place
 
@@ -116,8 +112,6 @@ void setup()
   Serial.begin(115200);
   Serial.println("SparkFun Reference Station - Test Sketch");
 
-  Serial.printf("1) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
-
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Initialize the GNSS
 
@@ -129,7 +123,7 @@ void setup()
 
   myGNSS.setFileBufferSize(fileBufferSize); // setFileBufferSize must be called _before_ .begin
 #if !DISABLE_RTCM
-  myGNSS.setRTCMBufferSize(fileBufferSize); // setRTCMBufferSize must be called _before_ .begin
+  myGNSS.setRTCMBufferSize(rtcmBufferSize); // setRTCMBufferSize must be called _before_ .begin
 #endif
 
   // Connect to the u-blox module using SPI port, csPin and speed setting
@@ -146,8 +140,6 @@ void setup()
   }
   while (!begun);
   
-  Serial.printf("2) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
-
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Wait for a 3D fix. Get the date and time for the log file
 
@@ -192,12 +184,9 @@ void setup()
 
   Serial.println(F("GNSS initialized."));
 
-  Serial.printf("3) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
-
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Initialize the SD card. Open the log file
 
-#if !DISABLE_SD
   Serial.println(F("Initializing SD card..."));
 
   // Begin the SD card
@@ -217,9 +206,6 @@ void setup()
   }
 
   Serial.println(F("SD card initialized."));
-#endif
-
-  Serial.printf("4) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Wait for a key press
@@ -246,11 +232,11 @@ void setup()
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // Enable RAWX and SFRBX
 
-  myGNSS.setAutoRXMSFRBXcallbackPtr(&newSFRBX); // Enable automatic RXM SFRBX messages with callback to newSFRBX
+  myGNSS.setAutoRXMSFRBXcallbackPtr(&newSFRBX); // Enable automatic RXM SFRBX messages at the navigation rate with callback to newSFRBX
 
   myGNSS.logRXMSFRBX(); // Enable RXM SFRBX data logging
 
-  myGNSS.setAutoRXMRAWXcallbackPtr(&newRAWX); // Enable automatic RXM RAWX messages with callback to newRAWX
+  myGNSS.setAutoRXMRAWXcallbackPtr(&newRAWX); // Enable automatic RXM RAWX messages at the navigation rate with callback to newRAWX
 
   myGNSS.logRXMRAWX(); // Enable RXM RAWX data logging
 
@@ -258,11 +244,11 @@ void setup()
 
 #if !DISABLE_NMEA
   myGNSS.newCfgValset(VAL_LAYER_RAM);
-  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GGA_SPI, navRate); // Ensure the GxGGA (Global positioning system fix data) message is enabled. Send every second.
-  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GSA_SPI, navRate); // Ensure the GxGSA (GNSS DOP and Active satellites) message is enabled. Send every second.
-  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GSV_SPI, navRate); // Ensure the GxGSV (GNSS satellites in view) message is enabled. Send every second.
-  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GST_SPI, navRate); // Ensure the GxGST (Position error statistics) message is enabled. Send every second.
-  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_RMC_SPI, navRate); // Ensure the GxRMC (Recommended minimum: position, velocity and time) message is enabled. Send every second.
+  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GGA_SPI, navRate); // Ensure the GxGGA (Global positioning system fix data) message is enabled. Send at 1Hz.
+  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GSA_SPI, navRate); // Ensure the GxGSA (GNSS DOP and Active satellites) message is enabled. Send at 1Hz.
+  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GSV_SPI, navRate); // Ensure the GxGSV (GNSS satellites in view) message is enabled. Send at 1Hz.
+  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_GST_SPI, navRate); // Ensure the GxGST (Position error statistics) message is enabled. Send at 1Hz.
+  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_NMEA_ID_RMC_SPI, navRate); // Ensure the GxRMC (Recommended minimum: position, velocity and time) message is enabled. Send at 1Hz.
   myGNSS.sendCfgValset();
 
   myGNSS.setNMEALoggingMask(SFE_UBLOX_FILTER_NMEA_GGA | SFE_UBLOX_FILTER_NMEA_GSA | SFE_UBLOX_FILTER_NMEA_GSV | SFE_UBLOX_FILTER_NMEA_GST | SFE_UBLOX_FILTER_NMEA_RMC); // Log only these NMEA messages
@@ -270,15 +256,13 @@ void setup()
 
 #if !DISABLE_RTCM
   myGNSS.newCfgValset(VAL_LAYER_RAM);
-  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_RTCM_3X_TYPE4072_0_SPI, navRate); // Enable RTCM3 4072_0 at the navigation rate. This is output without needing a survey-in.
+  myGNSS.addCfgValset(UBLOX_CFG_MSGOUT_RTCM_3X_TYPE4072_0_SPI, navRate); // Enable RTCM3 4072_0 at 1Hz. This is output without needing a survey-in.
   myGNSS.sendCfgValset();
 
   myGNSS.setRTCMLoggingMask(SFE_UBLOX_FILTER_RTCM_TYPE4072_0); // Log only this RTCM3 message
 #endif
 
   myGNSS.setNavigationFrequency(navRate); // Set navigation rate
-
-  Serial.printf("5) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 
   Serial.println(F("Press any key to stop logging."));
 
@@ -300,9 +284,7 @@ void loop()
 
     myGNSS.extractFileBufferData(myBuffer, sdWriteSize); // Extract exactly sdWriteSize bytes from the UBX file buffer and put them into myBuffer
 
-#if !DISABLE_SD
     myFile.write(myBuffer, sdWriteSize); // Write exactly sdWriteSize bytes from myBuffer to the ubxDataFile on the SD card
-#endif
 
     // In case the SD writing is slow or there is a lot of data to write, keep checking for the arrival of new data
     myGNSS.checkUblox(); // Check for the arrival of new data and process it.
@@ -331,8 +313,6 @@ void loop()
     else
       Serial.println(F("%"));
 
-    Serial.printf("L) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
-
     lastPrint = millis(); // Update lastPrint
   }
 
@@ -354,18 +334,14 @@ void loop()
 
       myGNSS.extractFileBufferData(myBuffer, bytesToWrite); // Extract bytesToWrite bytes from the UBX file buffer and put them into myBuffer
 
-#if !DISABLE_SD
       myFile.write(myBuffer, bytesToWrite); // Write bytesToWrite bytes from myBuffer to the ubxDataFile on the SD card
-#endif
 
       remainingBytes -= bytesToWrite; // Decrement remainingBytes
     }
 
     digitalWrite(STAT_LED, LOW); // Turn the STAT LED off
 
-#if !DISABLE_SD
     myFile.close(); // Close the data file
-#endif
 
     myGNSS.setNavigationFrequency(1); // Set navigation rate to 1Hz
 
@@ -376,8 +352,6 @@ void loop()
     myGNSS.sendCfgValset();
 
     myGNSS.setSPIOutput(COM_TYPE_UBX | COM_TYPE_NMEA | COM_TYPE_RTCM3); // Re-enable NMEA and RTCM
-
-    Serial.printf("6) FreeHeap: %d / HeapLowestPoint: %d / LargestBlock: %d\r\n", ESP.getFreeHeap(), xPortGetMinimumEverFreeHeapSize(), heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 
     Serial.println(F("Logging stopped. Freezing..."));
     while(1); // Do nothing more
