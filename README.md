@@ -3,7 +3,7 @@ SparkFun RTK Reference Station
 
 <table class="table table-hover table-striped table-bordered">
   <tr align="center">
-   <td><a href="https://www.sparkfun.com/products/22429"><img src="https://cdn.sparkfun.com//assets/parts/1/9/7/4/6/20000-SparkFun_RTK_Facet_L-Band-01.jpg"></a></td>
+   <td><a href="https://www.sparkfun.com/products/22429"><img src="https://cdn.sparkfun.com/assets/parts/2/2/5/2/3/SparkFun_GNSS_RTK_Reference_Station_-_05.jpg"></a></td>
   <tr align="center">
     <td><a href="https://www.sparkfun.com/products/22429">SparkFun RTK Reference Station (GPS-22429)</a></td>
   </tr>
@@ -24,8 +24,8 @@ Repository Contents
 * **/Enclosure** - Mechanical drawings for the custom extruded aluminium case and machined panels
 * **/Front_Panel** - Eagle PCB files for the prototype (fit-check) front panel
 * **/Rear_Panel** - Eagle PCB files for the prototype (fit-check) rear panel
-* **/Front_Panel_Sticker** - Drawings and prototype fit-check files for the front sticker
-* **/Rear_Panel_Sticker** - Drawings and prototype fit-check files for the rear sticker
+* **/Front_Panel_Sticker** - Drawings and prototype (fit-check) files for the front sticker
+* **/Rear_Panel_Sticker** - Drawings and prototype (fit-check) files for the rear sticker
 * **/Sticker_Alignment_Jig** - Eagle PCB files for the two-piece sticker alignment jig
 
 Documentation
