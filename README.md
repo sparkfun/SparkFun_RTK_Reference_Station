@@ -20,13 +20,15 @@ The Reference Station gets a big speed boost too. The microSD card socket is con
 Repository Contents
 -------------------
 
-* **/Hardware** - Eagle PCB files, schematic and dimensions
-* **/Enclosure** - Mechanical drawings for the custom extruded aluminium case and machined panels
-* **/Front_Panel** - Eagle PCB files for the prototype (fit-check) front panel
-* **/Rear_Panel** - Eagle PCB files for the prototype (fit-check) rear panel
-* **/Front_Panel_Sticker** - Drawings and prototype (fit-check) files for the front sticker
-* **/Rear_Panel_Sticker** - Drawings and prototype (fit-check) files for the rear sticker
-* **/Sticker_Alignment_Jig** - Eagle PCB files for the two-piece sticker alignment jig
+* [**/Reference_Station_Test_Sketches**](/Reference_Station_Test_Sketches/) - Stand-alone Arduino test sketches for the Reference Station
+* [**/Hardware**](/Hardware/) - Eagle PCB files, schematic and dimensions
+* [**/Enclosure**](/Enclosure/) - Mechanical drawings for the custom extruded aluminium case and machined panels
+* [**/Front_Panel**](/Front_Panel/) - Eagle PCB files for the prototype (fit-check) front panel
+* [**/Rear_Panel**](/Rear_Panel/) - Eagle PCB files for the prototype (fit-check) rear panel
+* [**/Front_Panel_Sticker**](/Front_Panel_Sticker/) - Drawings and prototype (fit-check) files for the front sticker
+* [**/Rear_Panel_Sticker**](/Rear_Panel_Sticker/) - Drawings and prototype (fit-check) files for the rear sticker
+* [**/Sticker_Alignment_Jig__Panel**](/Sticker_Alignment_Jig__Panel/) - Eagle PCB files for the two-piece sticker alignment jig
+* [**/Sticker_Alignment_Jig__Sticker**](/Sticker_Alignment_Jig__Sticker/) - Eagle PCB files for the two-piece sticker alignment jig
 
 Documentation
 --------------
