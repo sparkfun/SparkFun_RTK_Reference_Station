@@ -3,7 +3,7 @@ SparkFun RTK Reference Station
 
 <table class="table table-hover table-striped table-bordered">
   <tr align="center">
-   <td><a href="https://www.sparkfun.com/products/22429"><img src="https://cdn.sparkfun.com//assets/parts/2/2/5/2/3/SparkFun-Reference-Station--05.jpg"></a></td>
+   <td><a href="https://www.sparkfun.com/products/22429"><img src="https://cdn.sparkfun.com/assets/parts/2/2/5/2/3/SparkFun_GNSS_RTK_Reference_Station_-_13a.jpg"></a></td>
   <tr align="center">
     <td><a href="https://www.sparkfun.com/products/22429">SparkFun RTK Reference Station (GPS-22429)</a></td>
   </tr>
